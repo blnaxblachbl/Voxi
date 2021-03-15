@@ -1,10 +1,12 @@
 window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
-let lascommand = ""
 let recognition = new SpeechRecognition()
-recognition.continuous = false
+recognition.continuous = true
 recognition.lang = 'en-US'
 recognition.interimResults = false
 recognition.maxAlternatives = 1
+
+let lascommand = ""
+let started = false
 
 const commands = (command) => {
     console.log("command", command)
@@ -50,11 +52,17 @@ const commands = (command) => {
             link[0].click()
         }
     }
-    if (command.includes("back")){
+    if (command.includes("back")) {
         window.history.back()
     }
-    if (command.includes("forward")){
+    if (command.includes("forward")) {
         window.history.forward()
+    }
+    if (command.includes("next")) {
+        chrome.runtime.sendMessage("", "tab-next")
+    }
+    if (command.includes("prev")) {
+        chrome.runtime.sendMessage("", "tab-prev")
     }
 }
 
@@ -83,18 +91,30 @@ const scrollUp = () => {
 }
 
 recognition.onresult = (event) => {
-    const text = event.results[0][0].transcript
+    const { results } = event
+    const text = results[results.length - 1][0].transcript
     commands(text)
 }
 
-recognition.onend = () => {
-    recognition.stop()
-    recognition.start()
+recognition.onerror = () => {
+    stopListening()
+    startListening()
 }
 
-chrome.runtime.onMessage.addListener((message) => {
-    console.log("request", message)
-    if (message.includes('focused')) {
+const startListening = () => {
+    if (!started) {
+        console.log("start listening")
         recognition.start()
+        started = true
     }
-})
+}
+
+const stopListening = () => {
+    console.log("stop listening")
+    recognition.stop()
+    started = false
+}
+
+window.addEventListener('blur', stopListening)
+window.addEventListener('focus', startListening)
+window.addEventListener('load', startListening)
