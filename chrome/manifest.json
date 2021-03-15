@@ -15,8 +15,7 @@
                 "index.css"
             ],
             "js": [
-                "js/index.js",
-                "js/tab.js"
+                "scripts.js"
             ]
         }
     ],
@@ -29,6 +28,6 @@
         "tabCapture"
     ],
     "action": {
-        "default_popup": "components/popup/index.html"
+        "default_popup": "popup/index.html"
     }
 }

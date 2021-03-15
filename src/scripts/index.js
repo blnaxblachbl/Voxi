@@ -1,15 +1,10 @@
-window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
+import { recognition } from './recognition'
+import "./parser"
 
 let lascommand = ""
 let mode = "command"
 let writeTarget = 0
 let started = false
-
-let recognition = new SpeechRecognition()
-recognition.continuous = true
-recognition.lang = 'en-US'
-recognition.interimResults = false
-recognition.maxAlternatives = 1
 
 const commands = (command) => {
     console.log("command", command)

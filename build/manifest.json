@@ -1,0 +1,33 @@
+{
+  "name": "Voxi",
+  "description": "Use your voice to surfe internet!",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "index.css"
+      ],
+      "js": [
+        "scripts.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "tts",
+    "tabCapture"
+  ],
+  "action": {
+    "default_popup": "popup/index.html"
+  }
+}

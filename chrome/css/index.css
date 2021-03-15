@@ -1,0 +1,30 @@
+button::after {
+    content: attr(data-after);
+    color: blue;
+    font-size: .80em;
+    vertical-align: super; 
+}
+
+a::after {
+    content: attr(data-after);
+    color: red;
+    font-size: .80em;
+    vertical-align: super;
+}
+
+.voxi-input-after {
+    color: green;
+    font-size: .80em;
+    vertical-align: super;
+}
+
+.voxi-input-parent {
+    width: fit-content;
+    display: inline-block;
+}
+/* label::after {
+    content: attr(data-after);
+    color: yellowgreen;
+    font-size: .80em;
+    vertical-align: super;
+} */
