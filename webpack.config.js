@@ -4,7 +4,7 @@ const WebpackExtensionManifestPlugin = require("webpack-extension-manifest-plugi
 
 const baseManifest = require("./chrome/manifest.json")
 
-const config = {
+module.exports = {
     mode: "development",
     devtool: "cheap-module-source-map",
     entry: {
@@ -41,5 +41,4 @@ const config = {
             }
         })
     ]
-};
-module.exports = config;
+}

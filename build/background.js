@@ -5,6 +5,11 @@ var __webpack_exports__ = {};
   \*********************************/
 chrome.runtime.onInstalled.addListener(() => {
     console.log("installed")
+
+    chrome.storage.sync.set({ lascommand: "down" })
+    chrome.storage.sync.set({ mode: "command" })
+    chrome.storage.sync.set({ writeTarget: 0 })
+    chrome.storage.sync.set({ started: false })
 })
 
 chrome.tabs.onActivated.addListener(({ tabId }) => {
