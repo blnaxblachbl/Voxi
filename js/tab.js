@@ -1,12 +1,15 @@
 window.SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition
+
+let lascommand = ""
+let mode = "command"
+let writeTarget = 0
+let started = false
+
 let recognition = new SpeechRecognition()
 recognition.continuous = true
 recognition.lang = 'en-US'
 recognition.interimResults = false
 recognition.maxAlternatives = 1
-
-let lascommand = ""
-let started = false
 
 const commands = (command) => {
     console.log("command", command)
@@ -38,6 +41,7 @@ const commands = (command) => {
         const digit = command.replace(/(^(zero) ?| (zero) ?)/, 0).replace(/(^(one) ?| (one) ?)/, 1).replace(/(^(two) ?| (two) ?)/, 2).replace(/(^(three) ?| (three) ?)/, 3).replace(/(^(four) ?| (four) ?)/, 4).replace(/(^(five) ?| (five) ?)/, 5).replace(/(^(six) ?| (six) ?)/, 6).replace(/(^(seven) ?| (seven) ?)/, 7).replace(/(^(eight) ?| (eight) ?)/, 8).replace(/(^(nine) ?| (nine) ?)/, 8)
         const number = digit.replace(/\D/gm, '')
         const button = document.querySelectorAll(`button[data-after='${number}']`)
+        // const button = document.querySelectorAll(`button[data-after='${number}'], input[data-after='${number}']`)
         console.log(button)
         if (button.length > 0) {
             button[0].click()
@@ -63,6 +67,17 @@ const commands = (command) => {
     }
     if (command.includes("prev")) {
         chrome.runtime.sendMessage("", "tab-prev")
+    }
+    if (command.includes("input")) {
+        const digit = command.replace(/(^(zero) ?| (zero) ?)/, 0).replace(/(^(one) ?| (one) ?)/, 1).replace(/(^(two) ?| (two) ?)/, 2).replace(/(^(three) ?| (three) ?)/, 3).replace(/(^(four) ?| (four) ?)/, 4).replace(/(^(five) ?| (five) ?)/, 5).replace(/(^(six) ?| (six) ?)/, 6).replace(/(^(seven) ?| (seven) ?)/, 7).replace(/(^(eight) ?| (eight) ?)/, 8).replace(/(^(nine) ?| (nine) ?)/, 8)
+        const number = digit.replace(/\D/gm, '')
+        const inputs = document.querySelectorAll(`input[data-after='${number}']`)
+        if (inputs.length > 0) {
+            setTimeout(() => {
+                mode = 'write'
+                writeTarget = number
+            }, 1000)
+        }
     }
 }
 
@@ -93,7 +108,19 @@ const scrollUp = () => {
 recognition.onresult = (event) => {
     const { results } = event
     const text = results[results.length - 1][0].transcript
-    commands(text)
+    if (mode === 'command') {
+        commands(text)
+    }
+    if (mode === 'write') {
+        const inputs = document.querySelectorAll(`input[data-after='${writeTarget}']`)
+        if (inputs.length > 0) {
+            const text = results[results.length - 1][0].transcript
+            console.log("text", text)
+            inputs[0].value = text
+            writeTarget = 0
+            mode = "command"
+        }
+    }
 }
 
 recognition.onerror = () => {
