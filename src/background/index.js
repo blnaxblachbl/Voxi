@@ -1,20 +1,19 @@
 chrome.runtime.onInstalled.addListener(() => {
     console.log("installed:)")
-    recognition.start()
 
     chrome.storage.sync.set({ lascommand: "down" })
     chrome.storage.sync.set({ mode: "command" })
     chrome.storage.sync.set({ writeTarget: 0 })
 })
 
-chrome.tabs.onActivated.addListener(({ tabId }) => {
-    console.log('Message sended to #' + tabId)
-    chrome.tabs.sendMessage(
-        tabId,
-        "focused",
-        null
-    )
-})
+// chrome.tabs.onActivated.addListener(({ tabId }) => {
+//     console.log('Message sended to #' + tabId)
+//     chrome.tabs.sendMessage(
+//         tabId,
+//         "focused",
+//         null
+//     )
+// })
 
 chrome.runtime.onMessage.addListener(async (message) => {
     console.log("message", message)

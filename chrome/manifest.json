@@ -25,7 +25,8 @@
         "scripting",
         "tabs",
         "tts",
-        "tabCapture"
+        "tabCapture",
+        "search"
     ],
     "action": {
         "default_popup": "popup/index.html"

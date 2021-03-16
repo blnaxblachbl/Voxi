@@ -9,6 +9,8 @@ let state = {
     started: false,
 }
 
+let timer
+
 chrome.storage.onChanged.addListener((changes, namespace) => {
     for (let key in changes) {
         let storageChange = changes[key]
@@ -28,13 +30,30 @@ recognition.onresult = (event) => {
     if (state.mode === 'write') {
         const inputs = document.querySelectorAll(`input[data-after='${state.writeTarget}']`)
         if (inputs.length > 0) {
-            const text = results[results.length - 1][0].transcript
             console.log("text", text)
             inputs[0].value = text
-            chrome.storage.sync.set({ mode: "command" })
-            chrome.storage.sync.set({ writeTarget: 0 })
+            if (timer) {
+                clearTimer()
+                startTimer()
+            } else {
+                startTimer()
+            }
         }
     }
+}
+
+const startTimer = () => {
+    timer = setTimeout(() => {
+        chrome.storage.sync.set({ mode: "command" })
+        chrome.storage.sync.set({ writeTarget: 0 })
+        console.log("stoped")
+        clearTimer()
+    }, 3000)
+}
+
+const clearTimer = () => {
+    clearInterval(timer)
+    timer = null
 }
 
 recognition.onerror = (e) => {

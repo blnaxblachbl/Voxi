@@ -4,3 +4,7 @@
     font-size: .80em;
     vertical-align: super;
 }
+
+.voxi-input-parent {
+    width: max-content;
+}

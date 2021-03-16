@@ -1,6 +1,7 @@
 export const commands = (command) => {
     console.log("command", command)
-    if (command.includes('reload')){
+    command.toLowerCase()
+    if (command.includes('reload')) {
         window.location.reload()
     }
     if (command.includes("down") || command.includes("lower")) {
@@ -28,10 +29,18 @@ export const commands = (command) => {
                 scrollUp()
             }
         })
-
     }
     if (command.includes('click')) {
-        const digit = command.replace(/(^(zero) ?| (zero) ?)/, 0).replace(/(^(one) ?| (one) ?)/, 1).replace(/(^(two) ?| (two) ?)/, 2).replace(/(^(three) ?| (three) ?)/, 3).replace(/(^(four) ?| (four) ?)/, 4).replace(/(^(five) ?| (five) ?)/, 5).replace(/(^(six) ?| (six) ?)/, 6).replace(/(^(seven) ?| (seven) ?)/, 7).replace(/(^(eight) ?| (eight) ?)/, 8).replace(/(^(nine) ?| (nine) ?)/, 8)
+        const digit = command.replace(/zero/, 0)
+            .replace(/one/, 1)
+            .replace(/two/, 2)
+            .replace(/three/, 3)
+            .replace(/four/, 4)
+            .replace(/five/, 5)
+            .replace(/six/, 6)
+            .replace(/seven/, 7)
+            .replace(/eight/, 8)
+            .replace(/nine/, 9)
         const number = digit.replace(/\D/gm, '')
         const element = document.querySelectorAll(`[data-after='${number}']`)
         console.log(element)
@@ -53,6 +62,12 @@ export const commands = (command) => {
     }
     if (command.includes("tab")) {
         chrome.runtime.sendMessage(command)
+    }
+    if (command.includes('search')) {
+        // chrome.search.query({
+        //     text: command.replace(/search/gm, ''),
+        //     description: "NEW_TAB",
+        // })
     }
 }
 
