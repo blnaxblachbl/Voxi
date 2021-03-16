@@ -1,5 +1,8 @@
 export const commands = (command) => {
     console.log("command", command)
+    if (command.includes('reload')){
+        window.location.reload()
+    }
     if (command.includes("down") || command.includes("lower")) {
         scrollDown()
         chrome.storage.sync.set({ lascommand: "down" })
@@ -27,23 +30,19 @@ export const commands = (command) => {
         })
 
     }
-    if (command.includes('button')) {
+    if (command.includes('click')) {
         const digit = command.replace(/(^(zero) ?| (zero) ?)/, 0).replace(/(^(one) ?| (one) ?)/, 1).replace(/(^(two) ?| (two) ?)/, 2).replace(/(^(three) ?| (three) ?)/, 3).replace(/(^(four) ?| (four) ?)/, 4).replace(/(^(five) ?| (five) ?)/, 5).replace(/(^(six) ?| (six) ?)/, 6).replace(/(^(seven) ?| (seven) ?)/, 7).replace(/(^(eight) ?| (eight) ?)/, 8).replace(/(^(nine) ?| (nine) ?)/, 8)
         const number = digit.replace(/\D/gm, '')
-        const button = document.querySelectorAll(`button[data-after='${number}']`)
-        // const button = document.querySelectorAll(`button[data-after='${number}'], input[data-after='${number}']`)
-        console.log(button)
-        if (button.length > 0) {
-            button[0].click()
-        }
-    }
-    if (command.includes('link')) {
-        const digit = command.replace(/(^(zero) ?| (zero) ?)/, 0).replace(/(^(one) ?| (one) ?)/, 1).replace(/(^(two) ?| (two) ?)/, 2).replace(/(^(three) ?| (three) ?)/, 3).replace(/(^(four) ?| (four) ?)/, 4).replace(/(^(five) ?| (five) ?)/, 5).replace(/(^(six) ?| (six) ?)/, 6).replace(/(^(seven) ?| (seven) ?)/, 7).replace(/(^(eight) ?| (eight) ?)/, 8).replace(/(^(nine) ?| (nine) ?)/, 8)
-        const number = digit.replace(/\D/gm, '')
-        const link = document.querySelectorAll(`a[data-after='${number}']`)
-        console.log(link)
-        if (link.length > 0) {
-            link[0].click()
+        const element = document.querySelectorAll(`[data-after='${number}']`)
+        console.log(element)
+        if (element.length > 0) {
+            if (element[0] instanceof HTMLInputElement) {
+                setTimeout(() => {
+                    chrome.storage.sync.set({ mode: "write" })
+                    chrome.storage.sync.set({ writeTarget: number })
+                }, 1000)
+            }
+            element[0].click()
         }
     }
     if (command.includes("back")) {
@@ -52,22 +51,8 @@ export const commands = (command) => {
     if (command.includes("forward")) {
         window.history.forward()
     }
-    if (command.includes("next")) {
-        chrome.runtime.sendMessage("", "tab-next")
-    }
-    if (command.includes("prev")) {
-        chrome.runtime.sendMessage("", "tab-prev")
-    }
-    if (command.includes("input")) {
-        const digit = command.replace(/(^(zero) ?| (zero) ?)/, 0).replace(/(^(one) ?| (one) ?)/, 1).replace(/(^(two) ?| (two) ?)/, 2).replace(/(^(three) ?| (three) ?)/, 3).replace(/(^(four) ?| (four) ?)/, 4).replace(/(^(five) ?| (five) ?)/, 5).replace(/(^(six) ?| (six) ?)/, 6).replace(/(^(seven) ?| (seven) ?)/, 7).replace(/(^(eight) ?| (eight) ?)/, 8).replace(/(^(nine) ?| (nine) ?)/, 8)
-        const number = digit.replace(/\D/gm, '')
-        const inputs = document.querySelectorAll(`input[data-after='${number}']`)
-        if (inputs.length > 0) {
-            setTimeout(() => {
-                chrome.storage.sync.set({ mode: "write" })
-                chrome.storage.sync.set({ writeTarget: number })
-            }, 1000)
-        }
+    if (command.includes("tab")) {
+        chrome.runtime.sendMessage(command)
     }
 }
 

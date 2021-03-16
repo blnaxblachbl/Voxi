@@ -1,10 +1,10 @@
 chrome.runtime.onInstalled.addListener(() => {
-    console.log("installed")
+    console.log("installed:)")
+    recognition.start()
 
     chrome.storage.sync.set({ lascommand: "down" })
     chrome.storage.sync.set({ mode: "command" })
     chrome.storage.sync.set({ writeTarget: 0 })
-    chrome.storage.sync.set({ started: false })
 })
 
 chrome.tabs.onActivated.addListener(({ tabId }) => {
@@ -41,6 +41,9 @@ chrome.runtime.onMessage.addListener(async (message) => {
                     chrome.tabs.update(allTabsIds[allTabsIds.length - 1], { selected: true })
                 }
             }
+        }
+        if (message.includes('close')) {
+            chrome.tabs.remove(current[0].id)
         }
     }
 })

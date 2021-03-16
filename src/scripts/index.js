@@ -13,7 +13,9 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
     for (let key in changes) {
         let storageChange = changes[key]
         state[key] = storageChange.newValue
-        console.log(key, storageChange.newValue)
+        if (key === 'mode') {
+            recognition.interimResults = storageChange.newValue
+        }
     }
 })
 
@@ -35,8 +37,8 @@ recognition.onresult = (event) => {
     }
 }
 
-recognition.onerror = () => {
-    console.log("error")
+recognition.onerror = (e) => {
+    console.log("error", e)
     if (!state.started) {
         stopListening()
         startListening()
@@ -49,7 +51,7 @@ const startListening = () => {
     if (!state.started) {
         console.log("start listening")
         recognition.start()
-        chrome.storage.sync.set({ started: true })
+        state.started = true
     }
 }
 
@@ -57,7 +59,7 @@ const stopListening = () => {
     if (state.started) {
         console.log("stop listening")
         recognition.stop()
-        chrome.storage.sync.set({ started: false })
+        state.started = false
     }
 }
 

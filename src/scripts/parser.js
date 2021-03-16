@@ -1,24 +1,21 @@
-// const buttons = document.querySelectorAll('button, input[type="button"]')
-const buttons = document.querySelectorAll('button')
-const links = document.getElementsByTagName("a")
-const inputs = document.querySelectorAll('input[type="text"], input[type="select"], input[type="radio"]')
+const arr = document.querySelectorAll('button, a, input[type="text"], input[type="select"], input[type="radio"], input[type="button"]')
 
-for (let i = 0, l = buttons.length; i < l; i++) {
-    buttons[i].setAttribute("data-after", i)
-}
-for (let i = 0, l = links.length; i < l; i++) {
-    links[i].setAttribute("data-after", i)
-}
-for (let i = 0, l = inputs.length; i < l; i++) {
-    inputs[i].setAttribute("data-after", i)
-    const parent = document.createElement('div')
-    const number = document.createElement('span')
-    parent.classList.add('voxi-input-parent')
-    number.classList.add('voxi-input-after')
-    number.innerHTML = `${i}`
-    if (inputs[i] instanceof Node) {
-        parent.appendChild(inputs[i].cloneNode(true))
-        parent.appendChild(number)
-        inputs[i].replaceWith(parent)
+for (let i = 0, l = arr.length; i < l; i++) {
+    if (arr[i] instanceof HTMLInputElement) {
+        arr[i].setAttribute("data-after", i)
+        const parent = document.createElement('div')
+        const number = document.createElement('span')
+        number.setAttribute("data-after", i)
+        parent.classList.add('voxi-input-parent')
+        number.classList.add('voxi-after')
+        // number.innerHTML = `${i}`
+        if (arr[i] instanceof Node) {
+            parent.appendChild(arr[i].cloneNode(true))
+            parent.appendChild(number)
+            arr[i].replaceWith(parent)
+        }
+    } else {
+        arr[i].setAttribute("data-after", i)
+        arr[i].classList.add('voxi-after')
     }
 }
