@@ -1,24 +1,27 @@
 export const commands = (command) => {
-    console.log("command", command)
-    command.toLowerCase()
     if (command.includes('reload')) {
         window.location.reload()
+        return true
     }
     if (command.includes("down") || command.includes("lower")) {
         scrollDown()
         chrome.storage.sync.set({ lascommand: "down" })
+        return true
     }
     if (command.includes("up") || command.includes("higher")) {
         scrollUp()
         chrome.storage.sync.set({ lascommand: "up" })
+        return true
     }
     if (command.includes('bottom')) {
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'auto' })
         chrome.storage.sync.set({ lascommand: "down" })
+        return true
     }
     if (command.includes('top')) {
         window.scrollTo({ top: 0, behavior: 'auto' })
         chrome.storage.sync.set({ lascommand: "up" })
+        return true
     }
     if (command.includes("more")) {
         chrome.storage.sync.get(["lascommand"], ({ lascommand }) => {
@@ -29,6 +32,7 @@ export const commands = (command) => {
                 scrollUp()
             }
         })
+        return true
     }
     if (command.includes('click')) {
         const digit = command.replace(/zero/, 0)
@@ -53,22 +57,17 @@ export const commands = (command) => {
             }
             element[0].click()
         }
+        return true
     }
     if (command.includes("back")) {
         window.history.back()
+        return true
     }
     if (command.includes("forward")) {
         window.history.forward()
+        return true
     }
-    if (command.includes("tab")) {
-        chrome.runtime.sendMessage(command)
-    }
-    if (command.includes('search')) {
-        // chrome.search.query({
-        //     text: command.replace(/search/gm, ''),
-        //     description: "NEW_TAB",
-        // })
-    }
+    return false
 }
 
 const scrollDown = () => {

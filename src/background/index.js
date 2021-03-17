@@ -1,48 +1,48 @@
+import { commands } from './commands'
+
+let timer
+
 chrome.runtime.onInstalled.addListener(() => {
     console.log("installed:)")
 
     chrome.storage.sync.set({ lascommand: "down" })
     chrome.storage.sync.set({ mode: "command" })
     chrome.storage.sync.set({ writeTarget: 0 })
+    chrome.storage.sync.set({ autorun: false })
 })
 
-// chrome.tabs.onActivated.addListener(({ tabId }) => {
-//     console.log('Message sended to #' + tabId)
-//     chrome.tabs.sendMessage(
-//         tabId,
-//         "focused",
-//         null
-//     )
-// })
+chrome.storage.onChanged.addListener(async (changes, namespace) => {
+    for (let key in changes) {
+        let storageChange = changes[key]
+        if (key === 'autorun' && storageChange.newValue) {
+            chrome.tabs.create({
+                active: true,
+                index: 0,
+                pinned: true,
+                url: 'worker/worker.html'
+            })
+        }
+        if (key === 'autorun' && !storageChange.newValue) {
+            const voxiTab = await chrome.tabs.query({
+                active: true,
+                index: 0,
+                pinned: true,
+                url: 'chrome-extension://aneandehgfkgcaodckhobnmencgjbclm/worker/worker.html'
+            })
+            chrome.tabs.remove(voxiTab[0].id)
+        }
+    }
+})
 
-chrome.runtime.onMessage.addListener(async (message) => {
-    console.log("message", message)
-    if (message.includes('tab')) {
-        const current = await chrome.tabs.query({ active: true, currentWindow: true })
-        const allTabs = await chrome.tabs.query({ groupId: current[0].groupId })
-        const allTabsIds = allTabs.map(item => item.id)
-        const currentTabIndex = allTabsIds.indexOf(current[0].id)
-        if (message.includes('next')) {
-            console.log("next")
-            if (currentTabIndex !== -1) {
-                if (currentTabIndex + 1 <= allTabsIds.length - 1) {
-                    chrome.tabs.update(allTabsIds[currentTabIndex + 1], { selected: true })
-                } else {
-                    chrome.tabs.update(allTabsIds[0], { selected: true })
-                }
-            }
-        }
-        if (message.includes('prev')) {
-            if (currentTabIndex !== -1) {
-                if (currentTabIndex - 1 >= 0) {
-                    chrome.tabs.update(allTabsIds[currentTabIndex - 1], { selected: true })
-                } else {
-                    chrome.tabs.update(allTabsIds[allTabsIds.length - 1], { selected: true })
-                }
-            }
-        }
-        if (message.includes('close')) {
-            chrome.tabs.remove(current[0].id)
+
+chrome.runtime.onMessage.addListener((message) => {
+    if (!timer) {
+        const detected = commands(message)
+        if (detected) {
+            timer = setTimeout(() => {
+                clearInterval(timer)
+                timer = null
+            }, 1500)
         }
     }
 })

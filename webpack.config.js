@@ -32,6 +32,10 @@ module.exports = {
                 {
                     from: 'chrome/css',
                     to: ''
+                },
+                {
+                    from: 'chrome/worker',
+                    to: 'worker'
                 }
             ]
         }),

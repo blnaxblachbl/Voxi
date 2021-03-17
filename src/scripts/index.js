@@ -1,32 +1,40 @@
-import { recognition, state } from './recognition'
+import { commands } from './commands'
 import "./parser"
 
-recognition.onerror = (e) => {
-    console.log("error", e)
-    if (!state.started) {
-        stopListening()
-        startListening()
+console.log("injected")
+let timer
+
+let state = {
+    mode: "command",
+    lascommand: "down",
+    writeTarget: 0,
+    started: false,
+}
+
+chrome.storage.onChanged.addListener((changes, namespace) => {
+    for (let key in changes) {
+        let storageChange = changes[key]
+        state[key] = storageChange.newValue
+    }
+})
+
+chrome.runtime.onMessage.addListener((message, sender, responder) => {
+    if (state.mode === 'command') {
+        console.log("message from back", message)
+        if (!timer) {
+            let detected = commands(message)
+            if (detected) {
+                timer = setTimeout(() => {
+                    clearInterval(timer)
+                    timer = null
+                }, 1500)
+            }
+        }
     } else {
-        startListening()
+        const { text, target } = message
+        const inputs = document.querySelectorAll(`input[data-after='${target}']`)
+        if (inputs.length > 0) {
+            inputs[0].value = text
+        }
     }
-}
-
-const startListening = () => {
-    if (!state.started) {
-        recognition.start()
-        state.started = true
-        console.log("start listening")
-    }
-}
-
-const stopListening = () => {
-    if (state.started) {
-        recognition.stop()
-        state.started = false
-        console.log("stop listening")
-    }
-}
-
-window.addEventListener('blur', stopListening)
-window.addEventListener('focus', startListening)
-window.addEventListener('load', startListening)
+})
