@@ -8,8 +8,21 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.sync.set({ lascommand: "down" })
     chrome.storage.sync.set({ mode: "command" })
     chrome.storage.sync.set({ writeTarget: 0 })
-    chrome.storage.sync.set({ autorun: false })
+    chrome.storage.sync.set({ autorun: true })
     chrome.storage.sync.set({ language: 'en-US' })
+})
+
+chrome.windows.onCreated.addListener(() => {
+    chrome.storage.sync.get(['autorun'], ({ autorun }) => {
+        if (autorun) {
+            chrome.tabs.create({
+                active: false,
+                index: 0,
+                pinned: true,
+                url: 'worker/worker.html'
+            })
+        }
+    })
 })
 
 chrome.storage.onChanged.addListener(async (changes, namespace) => {

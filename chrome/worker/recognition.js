@@ -23,6 +23,7 @@ chrome.storage.sync.get(['language', 'autorun'], ({ language, autorun }) => {
     recognition.lang = language
     if (autorun) {
         recognition.start()
+        state.started = true
     }
 })
 
@@ -39,17 +40,6 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
                 state.started = true
             }, 500)
             console.log(storageChange.newValue)
-        }
-        if (key === 'autorun') {
-            if (storageChange.newValue) {
-                setTimeout(() => {
-                    recognition.start()
-                    state.started = true
-                }, 500)
-            } else {
-                recognition.stop()
-                state.started = false
-            }
         }
     }
 })
@@ -100,7 +90,23 @@ recognition.onerror = async (e) => {
         }, 500)
     } else {
         recognition.start()
+        state.started = true
     }
 }
+document.addEventListener("DOMContentLoaded", (event) => {
+    const switchElement = document.getElementById("switchElement")
+    switchElement.addEventListener('change', (e) => {
+        console.log(e.target.checked)
+        if (e.target.checked) {
+            setTimeout(() => {
+                recognition.start()
+                state.started = true
+            }, 500)
+        } else {
+            recognition.stop()
+            state.started = false
+        }
+    })
+})
 
 // window.addEventListener('load', () => recognition.start())

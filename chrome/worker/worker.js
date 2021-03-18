@@ -9,10 +9,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
     chrome.storage.sync.get(['language'], ({ language }) => {
         languageSelector.value = language
     })
-    switchElement.addEventListener('change', (e) => {
-        chrome.storage.sync.set({ autorun: e.target.checked })
-    })
     languageSelector.addEventListener('change', e => {
         chrome.storage.sync.set({ language: e.target.value })
     })
+    // switchElement.addEventListener('change', (e) => {
+    //     if (e.target.value) {
+    //         recognition.start()
+    //         state.started = true
+    //     } else {
+    //         recognition.stop()
+    //         state.started = false
+    //     }
+    // })
 })

@@ -1,21 +1,20 @@
 body {
     display: flex;
     flex-direction: column;
-    width: 300px;
-    height: 200px;
+    width: 200px;
+    height: 300px;
     padding: 15px;
-    background-color: #f1f1f1;
+    background-color: #fff;
 }
 
 .button {
-    width: 50%;
+    width: 100%;
     padding: 10px 0;
     outline: none;
-    margin: 10px 0;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    background-color: grey;
+    background-color: #2196F3;
     color: #fff;
 }
 
@@ -38,7 +37,9 @@ button:hover {
     align-items: center;
     margin-bottom: 15px;
     justify-content: space-between;
-    max-width: 80%;
+    width: 100%;
+    font-size: 14px;
+    box-sizing: border-box;
 }
 
 .switch {
@@ -108,7 +109,7 @@ input:checked+.slider:before {
 }
 
 .selector-container {
-    display: block;
+    margin-bottom: 15px;
 }
 
 .selector-label {
@@ -117,6 +118,6 @@ input:checked+.slider:before {
 }
 
 .selector {
-    width: 80%;
+    width: 100%;
     height: 28px;
 }
