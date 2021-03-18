@@ -42,7 +42,6 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
                 recognition.start()
                 state.started = true
             }, 500)
-            console.log(storageChange.newValue)
         }
     }
 })
@@ -50,7 +49,6 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
 recognition.onresult = (event) => {
     const { results } = event
     const text = results[results.length - 1][0].transcript
-    console.log("text", text.toLowerCase())
     if (state.mode === 'command') {
         chrome.runtime.sendMessage(text.toLowerCase())
         sendCommandToTab(text.toLowerCase())
@@ -90,7 +88,6 @@ const startTimer = () => {
 }
 
 recognition.onerror = async (e) => {
-    console.log("error", e)
     if (state.started) {
         recognition.stop()
         setTimeout(() => {
@@ -105,7 +102,6 @@ recognition.onerror = async (e) => {
 document.addEventListener("DOMContentLoaded", (event) => {
     const switchElement = document.getElementById("switchElement")
     switchElement.addEventListener('change', (e) => {
-        console.log(e.target.checked)
         if (e.target.checked) {
             setTimeout(() => {
                 recognition.start()

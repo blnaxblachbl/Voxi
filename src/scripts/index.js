@@ -1,7 +1,6 @@
 import { commands } from './commands'
 import "./parser"
 
-console.log("injected")
 let timer
 
 let state = {
@@ -20,7 +19,6 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 
 chrome.runtime.onMessage.addListener((message, sender, responder) => {
     if (state.mode === 'command') {
-        console.log("message from back", message)
         if (!timer) {
             let detected = commands(message)
             if (detected) {

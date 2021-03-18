@@ -1,5 +1,4 @@
 chrome.storage.sync.get(['autorun'], ({ autorun }) => {
-    console.log("autorun", autorun)
     if (autorun) {
         markElements()
     }

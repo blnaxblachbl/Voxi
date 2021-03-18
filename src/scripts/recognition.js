@@ -53,7 +53,6 @@ const startTimer = () => {
     timer = setTimeout(() => {
         chrome.storage.sync.set({ mode: "command" })
         chrome.storage.sync.set({ writeTarget: 0 })
-        console.log("stoped")
         clearTimer()
     }, 3000)
 }
