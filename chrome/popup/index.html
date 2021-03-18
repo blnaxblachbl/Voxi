@@ -3,27 +3,29 @@
     <head>
         <link rel="stylesheet" href="popup.css">
         <script src="popup.js"></script>
+        <script src="changeLanguage.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     </head>
     <body>
-        <div class="title">
+        <div id="title" class="title">
             Wellcome to "Voxi" voice interface
         </div>
         <div class="switch-container">
-            Autorun
+            <div id="autorun">Autorun</div>
             <label class="switch">
                 <input id="switchElement" type="checkbox" checked>
                 <span class="slider round"></span>
             </label>
         </div>
         <div class="selector-container">
-            <div class="selector-label">Language</div>
+            <div id="language-label" class="selector-label">Language</div>
             <select id="language-selector" class="selector">
                 <option disabled>Select language</option>
                 <option value="en-US">English</option>
                 <option value="ru-RU">Russian</option>
             </select>
         </div>
-        <button id='settingsButtoon' class="button">
+        <button id="settingsButtoon" class="button">
             Settings
         </button>
     </body>

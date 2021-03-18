@@ -1,0 +1,14 @@
+{
+    "popupTitle": {
+        "message": "Добро пожаловать систему голосового управления 'Voxi'"
+    },
+    "popupAutorun": {
+        "message": "Автозапуск"
+    },
+    "popupLanguages": {
+        "message": "Языки"
+    },
+    "popupSettings": {
+        "message": "Настройки"
+    }
+}

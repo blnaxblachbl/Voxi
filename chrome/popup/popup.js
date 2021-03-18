@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", (event) => {
+    const title = document.getElementById("title")
     const switchElement = document.getElementById("switchElement")
     const languageSelector = document.getElementById("language-selector")
     const settingsButtoon = document.getElementById("settingsButtoon")
+
     chrome.storage.sync.get(['autorun'], ({ autorun }) => {
         switchElement.checked = autorun
     })

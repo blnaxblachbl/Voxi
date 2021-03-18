@@ -1,0 +1,14 @@
+{
+    "popupTitle": {
+        "message": "Wellcome to 'Voxi' voice interface"
+    },
+    "popupAutorun": {
+        "message": "Autorun"
+    },
+    "popupLanguages": {
+        "message": "Languages"
+    },
+    "popupSettings": {
+        "message": "Settings"
+    }
+}

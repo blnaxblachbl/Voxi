@@ -36,6 +36,10 @@ module.exports = {
                 {
                     from: 'chrome/worker',
                     to: 'worker'
+                },
+                {
+                    from: 'chrome/_locales',
+                    to: '_locales'
                 }
             ]
         }),

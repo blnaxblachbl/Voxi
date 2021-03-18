@@ -43,6 +43,7 @@ button:hover {
     margin-bottom: 15px;
     justify-content: space-between;
     max-width: 80%;
+    font-size: 14px;
 }
 
 .switch {
