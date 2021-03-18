@@ -1,11 +1,30 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="stylesheet" href="worker.css">
         <script src="worker.js"></script>
+        <script src="recognition.js"></script>
     </head>
     <body>
-        <div>
-            <h1>Wellcome to Voxi voice interface settings</h1>
+        <div class="space">
+            <div class="title">
+                Wellcome to "Voxi" settings page
+            </div>
+            <div class="switch-container">
+                Active
+                <label class="switch">
+                    <input id="switchElement" type="checkbox" checked>
+                    <span class="slider round"></span>
+                </label>
+            </div>
+            <div class="selector-container">
+                <div class="selector-label">Language</div>
+                <select id="language-selector" class="selector">
+                    <option disabled>Select language</option>
+                    <option value="en-US">English</option>
+                    <option value="ru-RU">Russian</option>
+                </select>
+            </div>
         </div>
     </body>
 </html>

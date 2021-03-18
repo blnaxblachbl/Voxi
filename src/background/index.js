@@ -9,22 +9,30 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.sync.set({ mode: "command" })
     chrome.storage.sync.set({ writeTarget: 0 })
     chrome.storage.sync.set({ autorun: false })
+    chrome.storage.sync.set({ language: 'en-US' })
 })
 
 chrome.storage.onChanged.addListener(async (changes, namespace) => {
     for (let key in changes) {
         let storageChange = changes[key]
         if (key === 'autorun' && storageChange.newValue) {
-            chrome.tabs.create({
-                active: true,
-                index: 0,
-                pinned: true,
-                url: 'worker/worker.html'
+            const voxiTab = await chrome.tabs.query({
+                url: 'chrome-extension://aneandehgfkgcaodckhobnmencgjbclm/worker/worker.html'
             })
+            if (voxiTab.length === 0) {
+                chrome.tabs.create({
+                    active: true,
+                    index: 0,
+                    pinned: true,
+                    url: 'worker/worker.html'
+                })
+            } else {
+                chrome.tabs.update(voxiTab[0].id, { active: true })
+            }
         }
         if (key === 'autorun' && !storageChange.newValue) {
             const voxiTab = await chrome.tabs.query({
-                active: true,
+                active: false,
                 index: 0,
                 pinned: true,
                 url: 'chrome-extension://aneandehgfkgcaodckhobnmencgjbclm/worker/worker.html'

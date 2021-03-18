@@ -1,8 +1,14 @@
 chrome.storage.sync.get(['autorun'], ({ autorun }) => {
     console.log("autorun", autorun)
     if (autorun) {
-        const arr = document.querySelectorAll('button, a, input[type="text"], input[type="select"], input[type="radio"], input[type="button"]')
-        for (let i = 0, l = arr.length; i < l; i++) {
+        markElements()
+    }
+})
+
+const markElements = () => {
+    const arr = document.querySelectorAll('button, a, input[type="text"], input[type="select"], input[type="radio"], input[type="button"]')
+    for (let i = 0, l = arr.length; i < l; i++) {
+        if (arr[i].getAttribute('data-after')) {
             if (arr[i] instanceof HTMLInputElement) {
                 arr[i].setAttribute("data-after", i)
                 const parent = document.createElement('div')
@@ -22,4 +28,4 @@ chrome.storage.sync.get(['autorun'], ({ autorun }) => {
             }
         }
     }
-})
+}
