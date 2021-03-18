@@ -7,13 +7,16 @@ let state = {
     writeTarget: 0,
     started: false,
 }
+
 let timer
 
-let grammar = '#JSGF V1.0; grammar commands; public <command> = click | tab | prev | next | previous | close | up | lower | higher | forward | back | search | more | find ;'
-let speechRecognitionList = new SpeechGrammarList()
-speechRecognitionList.addFromString(grammar, 1)
+const grammarEn = '#JSGF V1.0; grammar commands; public <command> = click | tab | prev | next | previous | close | up | lower | higher | forward | back | search | more | find ;'
+const grammarRu = '#JSGF V1.0; grammar commands; public <command> = click | tab | prev | next | previous | close | up | lower | higher | forward | back | search | more | find ;'
+const speechRecognitionList = new SpeechGrammarList()
+speechRecognitionList.addFromString(grammarRu, 1)
+speechRecognitionList.addFromString(grammarEn, 1)
 
-let recognition = new SpeechRecognition()
+const recognition = new SpeechRecognition()
 recognition.grammars = speechRecognitionList
 recognition.continuous = true
 recognition.interimResults = true
