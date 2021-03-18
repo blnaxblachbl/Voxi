@@ -50,6 +50,7 @@ recognition.onresult = (event) => {
     console.log("text", text.toLowerCase())
     if (state.mode === 'command') {
         chrome.runtime.sendMessage(text.toLowerCase())
+        sendCommandToTab(text.toLowerCase())
     }
     if (state.mode === 'write') {
         sendTextToTab(text)
@@ -67,6 +68,11 @@ const sendTextToTab = async (text) => {
     chrome.tabs.sendMessage(current[0].id, { text: text.toLowerCase(), target: state.writeTarget })
 }
 
+const sendCommandToTab = async text => {
+    const current = await chrome.tabs.query({ active: true, currentWindow: true })
+    chrome.tabs.sendMessage(current[0].id, text)
+}
+
 const clearTimer = () => {
     clearInterval(timer)
     timer = null
@@ -82,7 +88,7 @@ const startTimer = () => {
 
 recognition.onerror = async (e) => {
     console.log("error", e)
-    if (!state.started) {
+    if (state.started) {
         recognition.stop()
         setTimeout(() => {
             recognition.start()

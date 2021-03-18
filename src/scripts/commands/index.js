@@ -1,29 +1,31 @@
+import { commandsList } from './commands-list'
+
 export const commands = (command) => {
-    if (command.includes('reload')) {
+    if (command.includes(commandsList.reload)) {
         window.location.reload()
         return true
     }
-    if (command.includes("down") || command.includes("lower")) {
+    if (command.includes(commandsList.down) || command.includes(commandsList.lower)) {
         scrollDown()
         chrome.storage.sync.set({ lascommand: "down" })
         return true
     }
-    if (command.includes("up") || command.includes("higher")) {
+    if (command.includes(commandsList.up) || command.includes(commandsList.higher)) {
         scrollUp()
         chrome.storage.sync.set({ lascommand: "up" })
         return true
     }
-    if (command.includes('bottom')) {
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'auto' })
+    if (command.includes(commandsList.bottom)) {
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
         chrome.storage.sync.set({ lascommand: "down" })
         return true
     }
-    if (command.includes('top')) {
-        window.scrollTo({ top: 0, behavior: 'auto' })
+    if (command.includes(commandsList.top)) {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
         chrome.storage.sync.set({ lascommand: "up" })
         return true
     }
-    if (command.includes("more")) {
+    if (command.includes(commandsList.more)) {
         chrome.storage.sync.get(["lascommand"], ({ lascommand }) => {
             if (lascommand === 'down') {
                 scrollDown()
@@ -34,7 +36,7 @@ export const commands = (command) => {
         })
         return true
     }
-    if (command.includes('click')) {
+    if (command.includes(commandsList.click)) {
         const digit = command.replace(/zero/, 0)
             .replace(/one/, 1)
             .replace(/two/, 2)
@@ -59,11 +61,11 @@ export const commands = (command) => {
         }
         return true
     }
-    if (command.includes("back")) {
+    if (command.includes(commandsList.back)) {
         window.history.back()
         return true
     }
-    if (command.includes("forward")) {
+    if (command.includes(commandsList.forward)) {
         window.history.forward()
         return true
     }
