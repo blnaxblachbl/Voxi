@@ -7,7 +7,12 @@ const en = {
     'Repeat last comand': "more",
     'Click on something': "click... {and say number of element}",
     'Back to previous page': "back",
-    'Move to forward page': "forward"
+    'Move to forward page': "forward",
+    "Select next tab": "next tab",
+    "Select previous tab": "previous tab",
+    "Close current tab": "close tab",
+    "Open new tab": "new tab or create tab",
+    "Search somethiing in google": "search or find... {say search query}",
 }
 
 const ru = {
@@ -19,7 +24,12 @@ const ru = {
     "Повторить предыдущее действие": "еще",
     "Нажать на какой нибудь объект": "нажми... {произнесите номер объекта}",
     "Перейти на предыдущую страницу": "назад",
-    "Перейти на следующую страницу": "вперёд"
+    "Перейти на следующую страницу": "вперёд",
+    "Перейти на следующую вкладку": 'следующая вкладка',
+    "Перейти на предыдущий таб": "предыдущая вкладка",
+    "Закрыть текущую вкладку": "закрыть вкладку",
+    "Открыть новую вкладку": "новая вкладку или создать вкладку",
+    "Сделать поисковый запрос": "поиск или найди... {произнести запрос}",
 }
 
 document.addEventListener("DOMContentLoaded", (event) => {
