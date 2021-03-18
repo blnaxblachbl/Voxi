@@ -114,6 +114,7 @@ input:checked+.slider:before {
 
 .selector-container {
     display: block;
+    margin-bottom: 15px;
 }
 
 .selector-label {
@@ -124,4 +125,31 @@ input:checked+.slider:before {
 .selector {
     width: 80%;
     height: 28px;
+}
+
+.commands-container {
+    display: block;
+}
+
+.commands-title {
+    font-size: 14px;
+    margin-bottom: 15px;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.key {
+    font-size: 14px;
+    text-align: left;
+}
+
+.value {
+    font-size: 14px;
+    text-align: right;
 }
