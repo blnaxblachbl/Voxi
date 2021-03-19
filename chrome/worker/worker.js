@@ -28,7 +28,7 @@ const ru = {
     "Перейти на следующую вкладку": 'следующая вкладка',
     "Перейти на предыдущий таб": "предыдущая вкладка",
     "Закрыть текущую вкладку": "закрыть вкладку",
-    "Открыть новую вкладку": "новая вкладку или создать вкладку",
+    "Открыть новую вкладку": "новая вкладка или создать вкладку",
     "Сделать поисковый запрос": "поиск или найди... {произнести запрос}",
 }
 
@@ -90,7 +90,6 @@ const addCommandsList = (lang) => {
         div.appendChild(value)
         parent.appendChild(div)
     }
-    console.log(space.childNodes)
     space.replaceChild(parent, space.childNodes[0])
 }
 
@@ -99,19 +98,22 @@ const setLanguage = (lang) => {
     const active = document.getElementById("active")
     const language = document.getElementById("language-label")
     const commandsTitle = document.getElementById("commands-title")
+    const settingsTitle = document.getElementById("settings-title")
     const languageSelector = document.getElementById("language-selector")
     if (lang === 'ru-RU') {
         title.innerText = 'Добро пожаловать в настройки "Voxi"'
         active.innerText = "Включино"
         language.innerText = "Языки"
+        settingsTitle.innerText = "Настройки:"
         commandsTitle.innerText = "Список команд:"
         for (let i = 0; i < languageSelector.childNodes.length; i++) {
             languageSelector.childNodes[i].innerText = languageSelector.childNodes[i].value === 'ru-RU' ? "Русский" : "Английский"
         }
     } else {
         title.innerText = 'Wellcome to "Voxi" settings page'
-        active.innerText = "Autorun"
+        active.innerText = "Active"
         language.innerText = "Languages"
+        settingsTitle.innerText = "Settings:"
         commandsTitle.innerText = "Commands list:"
         for (let i = 0; i < languageSelector.childNodes.length; i++) {
             languageSelector.childNodes[i].innerText = languageSelector.childNodes[i].value === 'ru-RU' ? "Russian" : "English"
