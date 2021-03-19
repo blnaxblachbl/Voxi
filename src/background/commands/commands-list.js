@@ -11,8 +11,8 @@ const en = {
 
 const ru = {
     tab: "вкладка",
-    next: "след",
-    prev: "пред",
+    next: "следующ",
+    prev: "предыдуш",
     close: "закрыть",
     new: "новая",
     create: "открыть",
