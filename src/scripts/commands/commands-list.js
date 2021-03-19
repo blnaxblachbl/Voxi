@@ -20,7 +20,7 @@ const ru = {
     higher: "выше",
     bottom: "конец",
     top: "начало",
-    more: "еще",
+    more: "ещё",
     click: "нажми",
     back: "назад",
     forward: "вперёд"

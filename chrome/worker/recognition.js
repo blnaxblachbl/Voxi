@@ -34,6 +34,9 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
     for (let key in changes) {
         let storageChange = changes[key]
         state[key] = storageChange.newValue
+        if (key === 'mode') {
+            sendCommandToTab('')
+        }
         if (key === 'language') {
             recognition.lang = storageChange.newValue
             recognition.stop()
@@ -48,7 +51,10 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
 
 recognition.onresult = (event) => {
     const { results } = event
-    const text = results[results.length - 1][0].transcript
+    let text = '';
+    for (let i = event.resultIndex; i < results.length; i++) {
+        text += results[i][0].transcript;
+    }
     if (state.mode === 'command') {
         chrome.runtime.sendMessage(text.toLowerCase())
         sendCommandToTab(text.toLowerCase())
@@ -84,7 +90,7 @@ const startTimer = () => {
         chrome.storage.sync.set({ mode: "command" })
         chrome.storage.sync.set({ writeTarget: 0 })
         clearTimer()
-    }, 5000)
+    }, 4000)
 }
 
 recognition.onerror = async (e) => {
