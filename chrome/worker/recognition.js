@@ -11,7 +11,7 @@ let state = {
 let timer
 
 const grammarEn = '#JSGF V1.0; grammar commands; public <command> = click | tab | prev | next | previous | close | up | lower | higher | forward | back | search | more | find ;'
-const grammarRu = '#JSGF V1.0; grammar commands; public <command> = click | tab | prev | next | previous | close | up | lower | higher | forward | back | search | more | find ;'
+const grammarRu = '#JSGF V1.0; grammar commands; public <command> = click | таб | пед | следующий | педыдущий | закрыть | вверх | ниже | выше | вперёд | назад | поиск | ещё | найди ;'
 const speechRecognitionList = new SpeechGrammarList()
 speechRecognitionList.addFromString(grammarRu, 1)
 speechRecognitionList.addFromString(grammarEn, 1)
@@ -51,9 +51,9 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
 
 recognition.onresult = (event) => {
     const { results } = event
-    let text = '';
+    let text = ''
     for (let i = event.resultIndex; i < results.length; i++) {
-        text += results[i][0].transcript;
+        text += results[i][0].transcript
     }
     if (state.mode === 'command') {
         chrome.runtime.sendMessage(text.toLowerCase())
@@ -94,6 +94,7 @@ const startTimer = () => {
 }
 
 recognition.onerror = async (e) => {
+    console.error(e)
     if (state.started) {
         recognition.stop()
         setTimeout(() => {
