@@ -99,15 +99,22 @@ const setLanguage = (lang) => {
     const active = document.getElementById("active")
     const language = document.getElementById("language-label")
     const commandsTitle = document.getElementById("commands-title")
+    const languageSelector = document.getElementById("language-selector")
     if (lang === 'ru-RU') {
         title.innerText = 'Добро пожаловать в настройки "Voxi"'
         active.innerText = "Включино"
         language.innerText = "Языки"
         commandsTitle.innerText = "Список команд:"
+        for (let i = 0; i < languageSelector.childNodes.length; i++) {
+            languageSelector.childNodes[i].innerText = languageSelector.childNodes[i].value === 'ru-RU' ? "Русский" : "Английский"
+        }
     } else {
         title.innerText = 'Wellcome to "Voxi" settings page'
         active.innerText = "Autorun"
         language.innerText = "Languages"
         commandsTitle.innerText = "Commands list:"
+        for (let i = 0; i < languageSelector.childNodes.length; i++) {
+            languageSelector.childNodes[i].innerText = languageSelector.childNodes[i].value === 'ru-RU' ? "Russian" : "English"
+        }
     }
 }

@@ -49,15 +49,22 @@ const setLanguage = (lang) => {
     const autorun = document.getElementById("autorun")
     const language = document.getElementById("language-label")
     const settings = document.getElementById("settingsButtoon")
+    const languageSelector = document.getElementById("language-selector")
     if (lang === 'ru-RU') {
         title.innerText = 'Добро пожаловать в голосовой помощник - "Voxi"'
         autorun.innerText = "Автозапуск"
         language.innerText = "Языки"
         settings.innerText = "Настройки"
+        for (let i = 0; i < languageSelector.childNodes.length; i++) {
+            languageSelector.childNodes[i].innerText = languageSelector.childNodes[i].value === 'ru-RU' ? "Русский" : "Английский"
+        }
     } else {
         title.innerText = 'Wellcome to "Voxi" voice interface'
         autorun.innerText = "Autorun"
         language.innerText = "Languages"
         settings.innerText = "Settings"
+        for (let i = 0; i < languageSelector.childNodes.length; i++) {
+            languageSelector.childNodes[i].innerText = languageSelector.childNodes[i].value === 'ru-RU' ? "Russian" : "English"
+        }
     }
 }
