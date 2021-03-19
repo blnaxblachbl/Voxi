@@ -90,7 +90,11 @@ const addCommandsList = (lang) => {
         div.appendChild(value)
         parent.appendChild(div)
     }
-    space.replaceChild(parent, space.childNodes[0])
+    if (space.childNodes.length > 0) {
+        space.replaceChild(parent, space.childNodes[0])
+    } else {
+        space.appendChild(parent)
+    }
 }
 
 const setLanguage = (lang) => {

@@ -34,9 +34,6 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
     for (let key in changes) {
         let storageChange = changes[key]
         state[key] = storageChange.newValue
-        if (key === 'mode') {
-            sendCommandToTab('')
-        }
         if (key === 'language') {
             recognition.lang = storageChange.newValue
             recognition.stop()
@@ -50,34 +47,39 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
 })
 
 recognition.onresult = (event) => {
-    const { results } = event
+    helper = document.getElementById("voxi-helper")
+    const { results, resultIndex } = event
     let text = ''
-    for (let i = event.resultIndex; i < results.length; i++) {
-        text += results[i][0].transcript
+    let command = ''
+    let isFinal = results[resultIndex].isFinal
+    for (let i = resultIndex; i < results.length; i++) {
+        text += results[i][0].transcript.toLowerCase()
     }
-    if (state.mode === 'command') {
-        chrome.runtime.sendMessage(text.toLowerCase())
-        sendCommandToTab(text.toLowerCase())
-    }
-    if (state.mode === 'write') {
-        sendTextToTab(text)
-        if (timer) {
-            clearTimer()
-            startTimer()
+    command = isFinal ? text : ''
+    text = isFinal ? '' : text
+    if (helper) {
+        if (isFinal) {
+            helper.innerText = ''
         } else {
-            startTimer()
+            helper.innerText = text
         }
     }
+    if (state.mode === 'command') {
+        chrome.runtime.sendMessage({ command })
+        sendToTab({ text, command })
+    }
+    if (state.mode === 'write') {
+        sendToTab({ text, target: state.writeTarget })
+        if (timer) {
+            clearTimer()
+        }
+        startTimer()
+    }
 }
 
-const sendTextToTab = async (text) => {
+const sendToTab = async ({ text = '', command = '', target = 0 }) => {
     const current = await chrome.tabs.query({ active: true, currentWindow: true })
-    chrome.tabs.sendMessage(current[0].id, { text: text.toLowerCase(), target: state.writeTarget })
-}
-
-const sendCommandToTab = async text => {
-    const current = await chrome.tabs.query({ active: true, currentWindow: true })
-    chrome.tabs.sendMessage(current[0].id, text)
+    chrome.tabs.sendMessage(current[0].id, { text, command, target })
 }
 
 const clearTimer = () => {
@@ -93,8 +95,8 @@ const startTimer = () => {
     }, 4000)
 }
 
-recognition.onerror = async (e) => {
-    console.error(e)
+recognition.onerror = (e) => {
+    console.log(e)
     if (state.started) {
         recognition.stop()
         setTimeout(() => {

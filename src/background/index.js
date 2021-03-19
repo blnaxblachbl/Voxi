@@ -4,7 +4,7 @@ let timer
 
 chrome.runtime.onInstalled.addListener(() => {
     console.log("installed:)")
-    
+
     chrome.storage.sync.set({ lascommand: "down" })
     chrome.storage.sync.set({ mode: "command" })
     chrome.storage.sync.set({ writeTarget: 0 })
@@ -57,13 +57,25 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
 
 
 chrome.runtime.onMessage.addListener((message) => {
-    if (!timer) {
-        const detected = commands(message)
-        if (detected) {
-            timer = setTimeout(() => {
-                clearInterval(timer)
-                timer = null
-            }, 1500)
-        }
-    }
+    // console.log(message)
+    const { command } = message
+    console.log(command)
+    commands(command)
+    // if (timer) {
+    //     clearInterval(timer)
+    // }
+    // timer = setTimeout(() => {
+    //     commands(message)
+    //     clearInterval(timer)
+    //     timer = null
+    // }, 1500)
+    // if (!timer) {
+    //     const detected = commands(message)
+    //     if (detected) {
+    //         timer = setTimeout(() => {
+    //             clearInterval(timer)
+    //             timer = null
+    //         }, 1500)
+    //     }
+    // }
 })

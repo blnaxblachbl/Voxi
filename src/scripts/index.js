@@ -21,38 +21,25 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 })
 
 chrome.runtime.onMessage.addListener((message, sender, responder) => {
-    if (state.mode === 'command') {
-        helper.innerText = message
-        if (!timer) {
-            let detected = commands(message)
-            if (detected) {
-                timer = setTimeout(() => {
-                    clearInterval(timer)
-                    timer = null
-                    helper.innerText = ""
-                }, 1500)
-            }
-        }
-    } else {
-        const { text, target } = message
-        const inputs = document.querySelectorAll(`input[data-after='${target}']`)
+    if (message) {
+        const { text, target, command } = message
+        console.log("text", text)
+        console.log("command", command)
         helper.innerText = text
-        if (inputs.length > 0) {
-            inputs[0].value = text
+        if (state.mode === 'command') {
+            commands(command)
+        } else {
+            const inputs = document.querySelectorAll(`input[data-after='${target}']`)
+            if (inputs.length > 0 && text) {
+                inputs[0].value = text 
+            }
+            if (timer) {
+                clearInterval(timer)
+            }
+            timer = setTimeout(() => {
+                clearInterval(timer)
+                timer = null
+            }, 4000)
         }
-        // if (!timer) {
-        //     timer = setTimeout(() => {
-        //         clearInterval(timer)
-        //         timer = null
-        //         helper.innerText = ""
-        //     }, 4000)
-        // } else {
-        //     clearInterval(timer)
-        //     timer = setTimeout(() => {
-        //         clearInterval(timer)
-        //         timer = null
-        //         helper.innerText = ""
-        //     }, 4000)
-        // }
     }
 })
