@@ -49,9 +49,8 @@ export const commands = (command) => {
             .replace(/nine/, 9)
         const number = digit.replace(/\D/gm, '')
         const element = document.querySelectorAll(`[data-after='${number}']`)
-        console.log(element)
         if (element.length > 0) {
-            if (element[0] instanceof HTMLInputElement) {
+            if (element[0] instanceof HTMLInputElement || element[0] instanceof HTMLTextAreaElement) {
                 setTimeout(() => {
                     chrome.storage.sync.set({ mode: "write" })
                     chrome.storage.sync.set({ writeTarget: number })

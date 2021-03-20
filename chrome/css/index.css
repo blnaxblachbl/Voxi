@@ -4,13 +4,39 @@ body {
 
 .voxi-after::after {
     content: attr(data-after);
-    color: red;
+    padding:  0 2px;
+    background: rgba(240, 52, 52, 1);
+    color: #fff;
+    border-radius: 0.2em;
     font-size: .80em;
     vertical-align: super;
+    z-index: 999;
 }
 
 .voxi-input-parent {
-    width: max-content;
+    display: flex;
+    width: 100%;
+    position: relative;
+}
+
+.voxi-input-parent-submit {
+    display: flex;
+    width: fit-content;
+    position: relative;
+}
+
+.voxi-after-input::after {
+    content: attr(data-after);
+    padding:  0 2px;
+    background: rgba(240, 52, 52, 1);
+    color: #fff;
+    border-radius: 0.2em;
+    font-size: .80em;
+    vertical-align: super;
+    /* z-index: 999;
+    position: absolute;
+    right: 0;
+    top: 0 */
 }
 
 .voxi-helper-container {

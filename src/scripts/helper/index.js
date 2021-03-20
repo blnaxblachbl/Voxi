@@ -4,14 +4,49 @@ const svg = (`<svg width="20" height="20" viewBox="0 0 71 130" fill="none" xmlns
     <path d="M37.5784 66.7964H33.4004V70.9744H37.5784V66.7964Z" fill="black" />
     <path d="M45.9338 66.7964H41.7559V70.9744H45.9338V66.7964Z" fill="black" />
 </svg>`)
-const helper = document.createElement("div")
-const svgContainer = document.createElement("div")
-const textContainer = document.createElement("div")
-svgContainer.innerHTML = svg
-textContainer.setAttribute("class", "voxi-helper-text")
-textContainer.setAttribute("id", "voxi-helper")
-svgContainer.setAttribute("class", "voxi-helper-icon")
-helper.setAttribute("class", "voxi-helper-container")
-helper.appendChild(svgContainer)
-helper.appendChild(textContainer)
-document.body.appendChild(helper)
+
+chrome.storage.sync.get(['started'], ({ started }) => {
+    if (started) {
+        console.log(started)
+        addHelper()
+    }
+})
+
+chrome.storage.onChanged.addListener((changes, namespace) => {
+    for (let key in changes) {
+        let storageChange = changes[key]
+        if (key === 'started') {
+            if (storageChange.newValue) {
+                addHelper()
+            } else {
+                removeHelper()
+            }
+        }
+
+    }
+})
+
+const removeHelper = () => {
+    const helper = document.getElementById('voxi-helper-container')
+    try {
+        helper.remove()
+        console.log("removed")
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+const addHelper = () => {
+    const helper = document.createElement("div")
+    const svgContainer = document.createElement("div")
+    const textContainer = document.createElement("div")
+    svgContainer.innerHTML = svg
+    textContainer.setAttribute("class", "voxi-helper-text")
+    textContainer.setAttribute("id", "voxi-helper")
+    svgContainer.setAttribute("class", "voxi-helper-icon")
+    helper.setAttribute("class", "voxi-helper-container")
+    helper.setAttribute("id", "voxi-helper-container")
+    helper.appendChild(svgContainer)
+    helper.appendChild(textContainer)
+    document.body.appendChild(helper)
+}

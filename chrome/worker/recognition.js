@@ -56,43 +56,33 @@ recognition.onresult = (event) => {
         text += results[i][0].transcript.toLowerCase()
     }
     command = isFinal ? text : ''
-    text = isFinal ? '' : text
-    if (helper) {
-        if (isFinal) {
-            helper.innerText = ''
-        } else {
-            helper.innerText = text
-        }
-    }
+    // text = isFinal ? '' : text
     if (state.mode === 'command') {
         chrome.runtime.sendMessage({ command })
         sendToTab({ text, command })
     }
-    if (state.mode === 'write') {
-        sendToTab({ text, target: state.writeTarget })
-        if (timer) {
-            clearTimer()
+    if (helper) {
+        if (isFinal) {
+            helper.innerText = ''
+            setTimeout(() => {
+                sendToTab({ text: '' })
+            }, 200)
+        } else {
+            helper.innerText = text
         }
-        startTimer()
+    }
+    if (state.mode === 'write') {
+        if (isFinal) {
+            chrome.storage.sync.set({ mode: "command" })
+            chrome.storage.sync.set({ writeTarget: 0 })
+        }
+        sendToTab({ text, target: state.writeTarget })
     }
 }
 
 const sendToTab = async ({ text = '', command = '', target = 0 }) => {
     const current = await chrome.tabs.query({ active: true, currentWindow: true })
     chrome.tabs.sendMessage(current[0].id, { text, command, target })
-}
-
-const clearTimer = () => {
-    clearInterval(timer)
-    timer = null
-}
-
-const startTimer = () => {
-    timer = setTimeout(() => {
-        chrome.storage.sync.set({ mode: "command" })
-        chrome.storage.sync.set({ writeTarget: 0 })
-        clearTimer()
-    }, 4000)
 }
 
 recognition.onerror = (e) => {
@@ -115,12 +105,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
             setTimeout(() => {
                 recognition.start()
                 state.started = true
+                chrome.storage.sync.set({ started: true })
             }, 500)
         } else {
             recognition.stop()
             state.started = false
+            chrome.storage.sync.set({ started: false })
         }
     })
 })
-
-// window.addEventListener('load', () => recognition.start())

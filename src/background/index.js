@@ -9,6 +9,7 @@ chrome.runtime.onInstalled.addListener(() => {
     chrome.storage.sync.set({ mode: "command" })
     chrome.storage.sync.set({ writeTarget: 0 })
     chrome.storage.sync.set({ autorun: true })
+    chrome.storage.sync.set({ started: true })
     chrome.storage.sync.set({ language: 'en-US' })
 })
 
@@ -59,7 +60,6 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
 chrome.runtime.onMessage.addListener((message) => {
     // console.log(message)
     const { command } = message
-    console.log(command)
     commands(command)
     // if (timer) {
     //     clearInterval(timer)

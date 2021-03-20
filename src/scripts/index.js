@@ -11,8 +11,6 @@ let state = {
     started: false,
 }
 
-let helper = document.getElementById("voxi-helper")
-
 chrome.storage.onChanged.addListener((changes, namespace) => {
     for (let key in changes) {
         let storageChange = changes[key]
@@ -22,16 +20,29 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 
 chrome.runtime.onMessage.addListener((message, sender, responder) => {
     if (message) {
+        const helper = document.getElementById("voxi-helper")
         const { text, target, command } = message
-        console.log("text", text)
-        console.log("command", command)
         helper.innerText = text
         if (state.mode === 'command') {
-            commands(command)
+            const detected = commands(command)
+            // const root = document.querySelectorAll('button, a, input[type="text"], input[type="select"], input[type="radio"], input[type="button"]')
+            // console.log(command.replace(/[(^ )($ )]/, ''), detected)
+            // if (command && !detected) {
+            //     const treeWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT)
+            //     // console.log(treeWalker.nextNode())
+            //     while (treeWalker.nextNode()) {
+            //         const node = treeWalker.currentNode
+            //         if (node.nodeType === Node.TEXT_NODE && node.textContent.toLowerCase().includes(command.replace(/[(^ )($ )]/gm, ''))) {
+            //             console.log(node.parentNode)
+            //             node.parentNode.click()
+            //             break
+            //         }
+            //     }
+            // }
         } else {
-            const inputs = document.querySelectorAll(`input[data-after='${target}']`)
+            const inputs = document.querySelectorAll(`[data-after='${target}']`)
             if (inputs.length > 0 && text) {
-                inputs[0].value = text 
+                inputs[0].value = text
             }
             if (timer) {
                 clearInterval(timer)
