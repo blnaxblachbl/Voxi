@@ -73,16 +73,16 @@ recognition.onresult = (event) => {
     }
     if (state.mode === 'write') {
         if (isFinal) {
-            chrome.storage.sync.set({ mode: "command" })
-            chrome.storage.sync.set({ writeTarget: 0 })
+            chrome.storage.sync.set({ mode: "command", writeTarget: 0 })
+            // chrome.storage.sync.set({ writeTarget: 0 })
         }
-        sendToTab({ text, target: state.writeTarget })
+        sendToTab({ text })
     }
 }
 
-const sendToTab = async ({ text = '', command = '', target = 0 }) => {
+const sendToTab = async ({ text = '', command = '', isFinal = false }) => {
     const current = await chrome.tabs.query({ active: true, currentWindow: true })
-    chrome.tabs.sendMessage(current[0].id, { text, command, target })
+    chrome.tabs.sendMessage(current[0].id, { text, command })
 }
 
 recognition.onerror = (e) => {

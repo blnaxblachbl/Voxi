@@ -4,7 +4,7 @@ body {
 
 .voxi-after::after {
     content: attr(data-after);
-    padding:  0 2px;
+    padding: 0 2px;
     background: rgba(240, 52, 52, 1);
     color: #fff;
     border-radius: 0.2em;
@@ -25,18 +25,22 @@ body {
     position: relative;
 }
 
+.voxi-input:focus {
+    background-color: chartreuse !important;
+}
+
 .voxi-after-input::after {
     content: attr(data-after);
-    padding:  0 2px;
+    padding: 0 2px;
     background: rgba(240, 52, 52, 1);
     color: #fff;
     border-radius: 0.2em;
     font-size: .80em;
     vertical-align: super;
-    /* z-index: 999;
+    z-index: 999;
     position: absolute;
     right: 0;
-    top: 0 */
+    top: 0
 }
 
 .voxi-helper-container {

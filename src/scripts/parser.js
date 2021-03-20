@@ -35,6 +35,7 @@ const unmarkElements = () => {
     for (let i = 0, l = arr.length; i < l; i++) {
         if (arr[i] instanceof HTMLInputElement || arr[i] instanceof HTMLTextAreaElement) {
             arr[i].removeAttribute('data-after')
+            arr[i].classList.remove("voxi-input")
             arr[i].parentNode.replaceWith(arr[i])
         } else {
             arr[i].removeAttribute("data-after")
@@ -47,11 +48,11 @@ const markElements = () => {
     const arr = document.querySelectorAll(elemenst.join(', '))
     for (let i = 0, l = arr.length; i < l; i++) {
         if (arr[i] instanceof HTMLInputElement || arr[i] instanceof HTMLTextAreaElement) {
-            arr[i].setAttribute("data-after", i)
+            arr[i].setAttribute("data-after", i + 1)
+            arr[i].classList.add("voxi-input")
             const parent = document.createElement('div')
             const number = document.createElement('span')
-            number.setAttribute("data-after", i)
-            console.log(arr[i].getAttribute('type'))
+            number.setAttribute("data-after", i + 1)
             if (arr[i].getAttribute('type') === 'submit') {
                 parent.classList.add('voxi-input-parent-submit')
             } else {
@@ -65,7 +66,7 @@ const markElements = () => {
                 arr[i].replaceWith(parent)
             }
         } else {
-            arr[i].setAttribute("data-after", i)
+            arr[i].setAttribute("data-after", i + 1)
             arr[i].classList.add('voxi-after')
         }
     }

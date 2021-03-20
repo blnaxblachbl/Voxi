@@ -2,18 +2,20 @@ import { commands } from './commands'
 import "./parser"
 import "./helper"
 
-let timer
-
 let state = {
     mode: "command",
-    lascommand: "down",
     writeTarget: 0,
-    started: false,
 }
 
 chrome.storage.onChanged.addListener((changes, namespace) => {
     for (let key in changes) {
         let storageChange = changes[key]
+        if (key === 'writeTarget' && storageChange.newValue === 0) {
+            const inputs = document.querySelectorAll(`[data-after='${storageChange.oldValue}']`)
+            if (inputs.length > 0) {
+                inputs[0].blur()
+            }
+        }
         state[key] = storageChange.newValue
     }
 })
@@ -21,7 +23,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 chrome.runtime.onMessage.addListener((message, sender, responder) => {
     if (message) {
         const helper = document.getElementById("voxi-helper")
-        const { text, target, command } = message
+        const { text, command } = message
         helper.innerText = text
         if (state.mode === 'command') {
             const detected = commands(command)
@@ -40,17 +42,10 @@ chrome.runtime.onMessage.addListener((message, sender, responder) => {
             //     }
             // }
         } else {
-            const inputs = document.querySelectorAll(`[data-after='${target}']`)
+            const inputs = document.querySelectorAll(`[data-after='${state.writeTarget}']`)
             if (inputs.length > 0 && text) {
                 inputs[0].value = text
             }
-            if (timer) {
-                clearInterval(timer)
-            }
-            timer = setTimeout(() => {
-                clearInterval(timer)
-                timer = null
-            }, 4000)
         }
     }
 })

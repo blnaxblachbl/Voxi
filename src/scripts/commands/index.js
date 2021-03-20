@@ -52,11 +52,12 @@ export const commands = (command) => {
         if (element.length > 0) {
             if (element[0] instanceof HTMLInputElement || element[0] instanceof HTMLTextAreaElement) {
                 setTimeout(() => {
-                    chrome.storage.sync.set({ mode: "write" })
-                    chrome.storage.sync.set({ writeTarget: number })
+                    chrome.storage.sync.set({ mode: "write", writeTarget: number })
+                    element[0].focus()
                 }, 1000)
+            } else {
+                element[0].click()
             }
-            element[0].click()
         }
         return true
     }

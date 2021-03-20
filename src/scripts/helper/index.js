@@ -7,7 +7,6 @@ const svg = (`<svg width="20" height="20" viewBox="0 0 71 130" fill="none" xmlns
 
 chrome.storage.sync.get(['started'], ({ started }) => {
     if (started) {
-        console.log(started)
         addHelper()
     }
 })
@@ -28,12 +27,7 @@ chrome.storage.onChanged.addListener((changes, namespace) => {
 
 const removeHelper = () => {
     const helper = document.getElementById('voxi-helper-container')
-    try {
-        helper.remove()
-        console.log("removed")
-    } catch (e) {
-        console.log(e)
-    }
+    helper.remove()
 }
 
 const addHelper = () => {
