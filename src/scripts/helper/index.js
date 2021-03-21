@@ -5,8 +5,8 @@ const svg = (`<svg width="20" height="20" viewBox="0 0 71 130" fill="none" xmlns
     <path d="M45.9338 66.7964H41.7559V70.9744H45.9338V66.7964Z" fill="black" />
 </svg>`)
 
-chrome.storage.sync.get(['started'], ({ started }) => {
-    if (started) {
+chrome.storage.sync.get(['autorun'], ({ autorun }) => {
+    if (autorun) {
         addHelper()
     }
 })
@@ -14,7 +14,7 @@ chrome.storage.sync.get(['started'], ({ started }) => {
 chrome.storage.onChanged.addListener((changes, namespace) => {
     for (let key in changes) {
         let storageChange = changes[key]
-        if (key === 'started') {
+        if (key === 'autorun') {
             if (storageChange.newValue) {
                 addHelper()
             } else {

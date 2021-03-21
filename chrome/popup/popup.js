@@ -1,13 +1,10 @@
 document.addEventListener("DOMContentLoaded", (event) => {
-    const title = document.getElementById("title")
     const switchElement = document.getElementById("switchElement")
     const languageSelector = document.getElementById("language-selector")
     const settingsButtoon = document.getElementById("settingsButtoon")
 
-    chrome.storage.sync.get(['autorun'], ({ autorun }) => {
+    chrome.storage.sync.get(['autorun', 'language'], ({ autorun, language }) => {
         switchElement.checked = autorun
-    })
-    chrome.storage.sync.get(['language'], ({ language }) => {
         languageSelector.value = language
         setLanguage(language)
     })
@@ -19,7 +16,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
             }
         }
     })
-
     switchElement.addEventListener('change', (e) => {
         chrome.storage.sync.set({ autorun: e.target.checked })
         // chrome.storage.sync.set({ started: e.target.value })
@@ -55,7 +51,7 @@ const setLanguage = (lang) => {
         title.innerText = 'Добро пожаловать в голосовой помощник - "Voxi"'
         autorun.innerText = "Автозапуск"
         language.innerText = "Языки"
-        settings.innerText = "Настройки"
+        settings.innerText = "Начать"
         for (let i = 0; i < languageSelector.childNodes.length; i++) {
             languageSelector.childNodes[i].innerText = languageSelector.childNodes[i].value === 'ru-RU' ? "Русский" : "Английский"
         }
@@ -63,7 +59,7 @@ const setLanguage = (lang) => {
         title.innerText = 'Wellcome to "Voxi" voice interface'
         autorun.innerText = "Autorun"
         language.innerText = "Languages"
-        settings.innerText = "Settings"
+        settings.innerText = "Start"
         for (let i = 0; i < languageSelector.childNodes.length; i++) {
             languageSelector.childNodes[i].innerText = languageSelector.childNodes[i].value === 'ru-RU' ? "Russian" : "English"
         }

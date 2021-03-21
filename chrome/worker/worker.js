@@ -32,13 +32,12 @@ const ru = {
     "Сделать поисковый запрос": "поиск или найди... {произнести запрос}",
 }
 
+
 document.addEventListener("DOMContentLoaded", (event) => {
     const switchElement = document.getElementById("switchElement")
     const languageSelector = document.getElementById("language-selector")
-    chrome.storage.sync.get(['autorun'], ({ autorun }) => {
+    chrome.storage.sync.get(['autorun', 'language'], ({ autorun, language }) => {
         switchElement.checked = autorun
-    })
-    chrome.storage.sync.get(['language'], ({ language }) => {
         languageSelector.value = language
         setLanguage(language)
         addCommandsList(language)
@@ -50,6 +49,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
                 setLanguage(storageChange.newValue)
                 addCommandsList(storageChange.newValue)
             }
+            if (key === 'autorun') {
+                switchElement.checked = storageChange.newValue
+            }
         }
     })
 
@@ -57,15 +59,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
         chrome.storage.sync.set({ language: e.target.value })
     })
 
-    // switchElement.addEventListener('change', (e) => {
-    //     if (e.target.value) {
-    //         recognition.start()
-    //         state.started = true
-    //     } else {
-    //         recognition.stop()
-    //         state.started = false
-    //     }
-    // })
+    switchElement.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            setTimeout(() => {
+                chrome.storage.sync.set({ autorun: true })
+            }, 500)
+        } else {
+            chrome.storage.sync.set({ autorun: false })
+        }
+    })
 })
 
 const addCommandsList = (lang) => {
@@ -106,7 +108,7 @@ const setLanguage = (lang) => {
     const languageSelector = document.getElementById("language-selector")
     if (lang === 'ru-RU') {
         title.innerText = 'Добро пожаловать в настройки "Voxi"'
-        active.innerText = "Включино"
+        active.innerText = "Автозапуск"
         language.innerText = "Языки"
         settingsTitle.innerText = "Настройки:"
         commandsTitle.innerText = "Список команд:"
@@ -115,7 +117,7 @@ const setLanguage = (lang) => {
         }
     } else {
         title.innerText = 'Wellcome to "Voxi" settings page'
-        active.innerText = "Active"
+        active.innerText = "Autorun"
         language.innerText = "Languages"
         settingsTitle.innerText = "Settings:"
         commandsTitle.innerText = "Commands list:"

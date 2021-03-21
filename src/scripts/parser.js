@@ -1,5 +1,5 @@
-chrome.storage.sync.get(['started'], ({ started }) => {
-    if (started) {
+chrome.storage.sync.get(['autorun'], ({ autorun }) => {
+    if (autorun) {
         markElements()
     }
 })
@@ -7,7 +7,7 @@ chrome.storage.sync.get(['started'], ({ started }) => {
 chrome.storage.onChanged.addListener((changes, namespace) => {
     for (let key in changes) {
         let storageChange = changes[key]
-        if (key === 'started') {
+        if (key === 'autorun') {
             if (storageChange.newValue) {
                 markElements()
             } else {

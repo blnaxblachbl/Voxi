@@ -10,20 +10,24 @@ chrome.runtime.onInstalled.addListener(() => {
         mode: "command",
         writeTarget: 0,
         autorun: true,
-        started: true,
-        language: 'en-US'
+        language: 'ru-RU'
     })
 })
 
 chrome.windows.onCreated.addListener(() => {
-    chrome.storage.sync.get(['autorun'], ({ autorun }) => {
+    chrome.storage.sync.get(['autorun'], async ({ autorun }) => {
         if (autorun) {
-            chrome.tabs.create({
-                active: false,
-                index: 0,
-                pinned: true,
-                url: 'worker/worker.html'
+            const voxiTab = await chrome.tabs.query({
+                url: 'chrome-extension://aneandehgfkgcaodckhobnmencgjbclm/worker/worker.html'
             })
+            if (voxiTab.length == 0) {
+                chrome.tabs.create({
+                    active: false,
+                    index: 0,
+                    pinned: true,
+                    url: 'worker/worker.html'
+                })
+            }
         }
     })
 })
@@ -43,20 +47,22 @@ chrome.storage.onChanged.addListener(async (changes, namespace) => {
                         pinned: true,
                         url: 'worker/worker.html'
                     })
-                } else if (voxiTab[0].id) {
-                    chrome.tabs.update(voxiTab[0].id, { active: true })
-                }
-            } else {
-                const voxiTab = await chrome.tabs.query({
-                    active: false,
-                    index: 0,
-                    pinned: true,
-                    url: 'chrome-extension://aneandehgfkgcaodckhobnmencgjbclm/worker/worker.html'
-                })
-                if (voxiTab[0].id) {
-                    chrome.tabs.remove(voxiTab[0].id)
-                }
-            }
+                } 
+                // else if (voxiTab[0].id) {
+                //     chrome.tabs.update(voxiTab[0].id, { active: true })
+                // }
+            } 
+            // else {
+            //     const voxiTab = await chrome.tabs.query({
+            //         active: false,
+            //         index: 0,
+            //         pinned: true,
+            //         url: 'chrome-extension://aneandehgfkgcaodckhobnmencgjbclm/worker/worker.html'
+            //     })
+            //     if (voxiTab[0].id) {
+            //         chrome.tabs.remove(voxiTab[0].id)
+            //     }
+            // }
         }
     }
 })

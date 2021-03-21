@@ -22,12 +22,10 @@ recognition.continuous = true
 recognition.interimResults = true
 recognition.maxAlternatives = 1
 
-chrome.storage.sync.get(['language', 'autorun'], ({ language, autorun }) => {
+chrome.storage.sync.get(['language', 'started'], ({ language, started }) => {
     recognition.lang = language
-    if (autorun) {
-        recognition.start()
-        state.started = true
-    }
+    recognition.start()
+    state.started = true
 })
 
 chrome.storage.onChanged.addListener(async (changes, namespace) => {
@@ -98,19 +96,3 @@ recognition.onerror = (e) => {
         state.started = true
     }
 }
-document.addEventListener("DOMContentLoaded", (event) => {
-    const switchElement = document.getElementById("switchElement")
-    switchElement.addEventListener('change', (e) => {
-        if (e.target.checked) {
-            setTimeout(() => {
-                recognition.start()
-                state.started = true
-                chrome.storage.sync.set({ started: true })
-            }, 500)
-        } else {
-            recognition.stop()
-            state.started = false
-            chrome.storage.sync.set({ started: false })
-        }
-    })
-})
