@@ -25,7 +25,7 @@ chrome.runtime.onMessage.addListener((message, sender, responder) => {
         const helper = document.getElementById("voxi-helper")
         const { text, command } = message
         helper.innerText = text
-        if (state.mode === 'command') {
+        if (state.mode === 'command' && command) {
             const detected = commands(command)
             // const root = document.querySelectorAll('button, a, input[type="text"], input[type="select"], input[type="radio"], input[type="button"]')
             // console.log(command.replace(/[(^ )($ )]/, ''), detected)

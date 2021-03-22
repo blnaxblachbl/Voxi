@@ -1,42 +1,38 @@
 import { commandsList } from './commands-list'
 
 export const commands = (command) => {
-    if (command.includes(commandsList.reload)) {
+    if (command.match(new RegExp(commandsList.reload, 'gm'))) {
         window.location.reload()
+        chrome.storage.sync.set({ lascommand: command })
         return true
     }
-    if (command.includes(commandsList.down) || command.includes(commandsList.lower)) {
+    if (command.match(new RegExp(commandsList.down), 'gm')) {
         scrollDown()
-        chrome.storage.sync.set({ lascommand: "down" })
+        chrome.storage.sync.set({ lascommand: command })
         return true
     }
-    if (command.includes(commandsList.up) || command.includes(commandsList.higher)) {
+    if (command.match(new RegExp(commandsList.up, 'gm'))) {
         scrollUp()
-        chrome.storage.sync.set({ lascommand: "up" })
+        chrome.storage.sync.set({ lascommand: command })
         return true
     }
-    if (command.includes(commandsList.bottom)) {
+    if (command.match(new RegExp(commandsList.bottom, 'gm'))) {
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })
-        chrome.storage.sync.set({ lascommand: "down" })
+        chrome.storage.sync.set({ lascommand: command })
         return true
     }
-    if (command.includes(commandsList.top)) {
+    if (command.match(new RegExp(commandsList.top, 'gm'))) {
         window.scrollTo({ top: 0, behavior: 'smooth' })
-        chrome.storage.sync.set({ lascommand: "up" })
+        chrome.storage.sync.set({ lascommand: command })
         return true
     }
-    if (command.includes(commandsList.more)) {
+    if (command.match(new RegExp(commandsList.more, 'gm'))) {
         chrome.storage.sync.get(["lascommand"], ({ lascommand }) => {
-            if (lascommand === 'down') {
-                scrollDown()
-            }
-            if (lascommand === 'up') {
-                scrollUp()
-            }
+            commands(lascommand)
         })
         return true
     }
-    if (command.includes(commandsList.click)) {
+    if (command.match(new RegExp(commandsList.click))) {
         const digit = command.replace(/zero/, 0)
             .replace(/one/, 1)
             .replace(/two/, 2)
@@ -59,14 +55,17 @@ export const commands = (command) => {
                 element[0].click()
             }
         }
+        chrome.storage.sync.set({ lascommand: command })
         return true
     }
-    if (command.includes(commandsList.back)) {
+    if (command.match(new RegExp(commandsList.back, 'gm'))) {
         window.history.back()
+        chrome.storage.sync.set({ lascommand: command })
         return true
     }
-    if (command.includes(commandsList.forward)) {
+    if (command.match(new RegExp(commandsList.forward, 'gm'))) {
         window.history.forward()
+        chrome.storage.sync.set({ lascommand: command })
         return true
     }
     return false
