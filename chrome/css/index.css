@@ -45,7 +45,10 @@ body {
 
 .voxi-helper-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     padding: 10px;
     box-sizing: border-box;
     position: fixed;
@@ -70,4 +73,5 @@ body {
 .voxi-helper-text {
     font-size: 12px;
     color: black;
+    overflow-wrap: break-word;
 }
