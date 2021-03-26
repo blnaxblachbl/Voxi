@@ -47,16 +47,14 @@ export const commands = (command) => {
         const number = digit.replace(/\D/gm, '')
         const element = document.querySelectorAll(`[data-after="${number}"]`)
         if (element.length > 0) {
-            console.log(element[0])
             if (element[0] instanceof HTMLInputElement || element[0] instanceof HTMLTextAreaElement) {
                 setTimeout(() => {
                     chrome.storage.sync.set({ mode: "write", writeTarget: number })
+                    // element[0].click()
                     element[0].focus()
                 }, 1000)
-            } else {
-                element[0].focus()
-                element[0].click()
             }
+            element[0].click()
         }
         chrome.storage.sync.set({ lascommand: command })
         return true

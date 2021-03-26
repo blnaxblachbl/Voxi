@@ -44,6 +44,11 @@ const unmarkElements = () => {
     }
 }
 
+const getOffset = (el) => {
+    const rect = el.getBoundingClientRect()
+    return rect
+}
+
 const markElements = async () => {
     const arr = document.querySelectorAll(elemenst.join(', '))
     const promices = []
@@ -53,33 +58,43 @@ const markElements = async () => {
                 promices.push(
                     new Promise((resolve, reject) => {
                         arr[i].setAttribute("data-after", i + 1)
-                        const parent = document.createElement('div')
+                        const { top } = getOffset(arr[i])
+                        const parent = arr[i].parentNode
+                        const parentOffset = getOffset(parent)
+                        const childOffset = getOffset(arr[i])
+                        // const parent = document.createElement('div')
                         const number = document.createElement('span')
                         number.setAttribute("number-after", i + 1)
                         number.innerText = i + 1
                         number.classList.add('voxi-after')
-                        if (
-                            (
-                                arr[i] instanceof HTMLInputElement &&
-                                (
-                                    arr[i].getAttribute('type') === 'email' ||
-                                    arr[i].getAttribute('type') === 'text'
-                                )
-                            ) ||
-                            arr[i] instanceof HTMLTextAreaElement
-                        ) {
-                            parent.classList.add('voxi-parent')
-                        } else {
-                            parent.classList.add('voxi-parent')
-                            parent.classList.add('voxi-fit')
-                            arr[i].classList.forEach(item => {
-                                parent.classList.add(item)
-                            })
-                        }
-                        parent.appendChild(arr[i].cloneNode(true))
+                        parent.classList.add('voxi-parent')
+                        // const { width } = getOffset(number)
+                        number.style = `right: ${parentOffset.right - childOffset.right}px; top: ${childOffset.top - parentOffset.top}px;`
                         parent.appendChild(number)
-                        // arr[i].replaceWith(parent)
                         resolve(true)
+                        // if (
+                        //     (
+                        //         arr[i] instanceof HTMLInputElement &&
+                        //         (
+                        //             arr[i].getAttribute('type') === 'email' ||
+                        //             arr[i].getAttribute('type') === 'text'
+                        //         )
+                        //     ) ||
+                        //     arr[i] instanceof HTMLTextAreaElement
+                        // ) {
+                        //     parent.classList.add('voxi-parent')
+                        // } else {
+                        //     parent.classList.add('voxi-parent')
+                        //     // parent.classList.add('voxi-fit')
+                        //     // arr[i].classList.forEach(item => {
+                        //     //     parent.classList.add(item)
+                        //     // })
+                        // }
+                        // const clone = arr[i].cloneNode(true)
+                        // parent.appendChild(clone)
+                        // setTimeout(() => {
+                        //     arr[i].replaceWith(parent)
+                        // }, 1500)
                     })
                 )
             }
@@ -110,38 +125,44 @@ const markMoreElements = async (node) => {
                                     exist = document.querySelector(`[data-after="${count}"]`)
                                 }
                                 arr[i].setAttribute("data-after", count)
-                                const parent = document.createElement('div')
+                                // const parent = document.createElement('div')
+                                const parent = arr[i].parentNode
+                                const parentOffset = getOffset(parent)
+                                const childOffset = getOffset(arr[i])
                                 const number = document.createElement('span')
                                 number.setAttribute("number-after", count)
                                 number.innerText = count
                                 number.classList.add('voxi-after')
-                                if (
-                                    (
-                                        arr[i] instanceof HTMLInputElement &&
-                                        (
-                                            arr[i].getAttribute('type') === 'email' ||
-                                            arr[i].getAttribute('type') === 'text'
-                                        )
-                                    ) ||
-                                    arr[i] instanceof HTMLTextAreaElement
-                                ) {
-                                    parent.classList.add('voxi-parent')
-                                } else {
-                                    parent.classList.add('voxi-parent')
-                                    parent.classList.add('voxi-fit')
-                                    arr[i].classList.forEach(item => {
-                                        parent.classList.add(item)
-                                    })
-                                }
-                                parent.appendChild(arr[i].cloneNode(true))
+                                parent.classList.add('voxi-parent')
+                                number.style = `right: ${parentOffset.right - childOffset.right}px; top: ${childOffset.top - parentOffset.top}px;`
                                 parent.appendChild(number)
-                                setTimeout(() => {
-                                    try {
-                                        // arr[i].replaceWith(parent)
-                                    }catch(e){
-                                        console.log(e)
-                                    }
-                                }, 1000)
+                                // if (
+                                //     (
+                                //         arr[i] instanceof HTMLInputElement &&
+                                //         (
+                                //             arr[i].getAttribute('type') === 'email' ||
+                                //             arr[i].getAttribute('type') === 'text'
+                                //         )
+                                //     ) ||
+                                //     arr[i] instanceof HTMLTextAreaElement
+                                // ) {
+                                //     parent.classList.add('voxi-parent')
+                                // } else {
+                                //     parent.classList.add('voxi-parent')
+                                //     parent.classList.add('voxi-fit')
+                                //     arr[i].classList.forEach(item => {
+                                //         parent.classList.add(item)
+                                //     })
+                                // }
+                                // // parent.appendChild(arr[i].cloneNode(true))
+                                // parent.appendChild(number)
+                                // setTimeout(() => {
+                                //     try {
+                                //         // arr[i].replaceWith(parent)
+                                //     } catch (e) {
+                                //         console.log(e)
+                                //     }
+                                // }, 1000)
                             }
                             resolve(true)
                         })

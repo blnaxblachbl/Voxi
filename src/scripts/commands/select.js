@@ -47,7 +47,6 @@ const elemenst = [
 export const searchElement = (command) => {
     chrome.storage.sync.get(['language'], ({ language }) => {
         const resArr = getElements(command, language)
-        console.log(resArr)
         if (resArr.length > 0) {
             if (resArr.length === 1) {
                 resArr[0].click()

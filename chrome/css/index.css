@@ -6,7 +6,6 @@ body {
 }
 
 .voxi-after {
-    /* content: attr(data-after); */
     padding: 0 2px;
     background: rgba(240, 52, 52, 1);
     color: #fff;
@@ -22,28 +21,13 @@ body {
 }
 
 .voxi-parent {
-    display: flex !important;
-    width: 100%;
     position: relative;
-    border: none !important;
-    overflow: visible !important;
-    background-color: transparent !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    box-sizing: border-box !important;
 }
 
 .voxi-fit {
     width: fit-content !important;
 }
 
-/* input:focus {
-    background-color: chartreuse !important;
-}
-
-textarea:focus {
-    background-color: chartreuse !important;
-} */
 
 .voxi-after-input::after {
     content: attr(data-after);
@@ -55,7 +39,6 @@ textarea:focus {
     vertical-align: super;
     z-index: 999;
     position: absolute;
-    right: 0;
     top: 0
 }
 
