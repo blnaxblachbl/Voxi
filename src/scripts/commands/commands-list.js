@@ -35,7 +35,11 @@ const enRegExp = {
     more: '(^| )(more)($| )',
     click: '(((click|press)( on)?)).*(\\d)+',
     back: '(back|(previous +page))',
-    forward: '(forward|(next +page))'
+    forward: '(forward|(next +page))',
+    next: '(next)',
+    prev: '(previous)',
+    select: '(select|pick|press|click)',
+    cancel: '(cancel)',
 }
 
 const ruRegExp = {
@@ -47,7 +51,11 @@ const ruRegExp = {
     more: '(ещ(ё|е))',
     click: '(((нажми)( на)?)|(откр(ой|ыть))).*(\\d)+',
     back: '(назад|(предыдущ(ая|ую) +страниц(а|у)))',
-    forward: '(впер(ё|е)д|(следующ(ая|ую) +страниц(а|у)))'
+    forward: '(впер(ё|е)д|(следующ(ая|ую) +страниц(а|у)))',
+    next: '(дальше|далее|вп(е|ё)рд)',
+    prev: '(назад|верн(ись|и|уть|уться))',
+    select: '(выб(рать|ери)|наж(ать|ми))',
+    cancel: '(отмен(ить|на|и)( выделение)?)',
 }
 
 let commandsList = enRegExp

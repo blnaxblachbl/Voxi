@@ -76,6 +76,9 @@ recognition.onresult = (event) => {
         }
         sendToTab({ text })
     }
+    if (state.mode === 'select') {
+        sendToTab({ text, command })
+    }
 }
 
 const sendToTab = async ({ text = '', command = '', isFinal = false }) => {

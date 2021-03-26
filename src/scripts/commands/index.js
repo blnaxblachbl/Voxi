@@ -1,4 +1,5 @@
 import { commandsList } from './commands-list'
+import { searchElement } from './select'
 
 export const commands = (command) => {
     if (command.match(new RegExp(commandsList.reload, 'gm'))) {
@@ -44,14 +45,16 @@ export const commands = (command) => {
             .replace(/eight/, 8)
             .replace(/nine/, 9)
         const number = digit.replace(/\D/gm, '')
-        const element = document.querySelectorAll(`[data-after='${number}']`)
+        const element = document.querySelectorAll(`[data-after="${number}"]`)
         if (element.length > 0) {
+            console.log(element[0])
             if (element[0] instanceof HTMLInputElement || element[0] instanceof HTMLTextAreaElement) {
                 setTimeout(() => {
                     chrome.storage.sync.set({ mode: "write", writeTarget: number })
                     element[0].focus()
                 }, 1000)
             } else {
+                element[0].focus()
                 element[0].click()
             }
         }
@@ -68,6 +71,7 @@ export const commands = (command) => {
         chrome.storage.sync.set({ lascommand: command })
         return true
     }
+    searchElement(command)
     return false
 }
 

@@ -1,33 +1,49 @@
 body {
     position: relative !important;
 }
+:focus {
+    background-color: chartreuse !important;
+}
 
-.voxi-after::after {
-    content: attr(data-after);
+.voxi-after {
+    /* content: attr(data-after); */
     padding: 0 2px;
     background: rgba(240, 52, 52, 1);
     color: #fff;
+    width: fit-content;
+    height: fit-content;
     border-radius: 0.2em;
     font-size: .80em;
     vertical-align: super;
     z-index: 999;
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
-.voxi-input-parent {
-    display: flex;
+.voxi-parent {
+    display: flex !important;
     width: 100%;
     position: relative;
+    border: none !important;
+    overflow: visible !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
 }
 
-.voxi-input-parent-submit {
-    display: flex;
-    width: fit-content;
-    position: relative;
+.voxi-fit {
+    width: fit-content !important;
 }
 
-.voxi-input:focus {
+/* input:focus {
     background-color: chartreuse !important;
 }
+
+textarea:focus {
+    background-color: chartreuse !important;
+} */
 
 .voxi-after-input::after {
     content: attr(data-after);

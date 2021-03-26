@@ -1,4 +1,5 @@
 import { commands } from './commands'
+import { selects } from './commands/select'
 import "./parser"
 import "./helper"
 
@@ -10,13 +11,13 @@ let state = {
 chrome.storage.onChanged.addListener((changes, namespace) => {
     for (let key in changes) {
         let storageChange = changes[key]
+        state[key] = storageChange.newValue
         if (key === 'writeTarget' && storageChange.newValue === 0) {
             const inputs = document.querySelectorAll(`[data-after='${storageChange.oldValue}']`)
             if (inputs.length > 0) {
                 inputs[0].blur()
             }
         }
-        state[key] = storageChange.newValue
     }
 })
 
@@ -26,6 +27,7 @@ chrome.runtime.onMessage.addListener((message, sender, responder) => {
         const { text, command } = message
         helper.innerText = text
         if (state.mode === 'command' && command) {
+            console.time('command')
             const detected = commands(command)
             // const root = document.querySelectorAll('button, a, input[type="text"], input[type="select"], input[type="radio"], input[type="button"]')
             // console.log(command.replace(/[(^ )($ )]/, ''), detected)
@@ -41,11 +43,16 @@ chrome.runtime.onMessage.addListener((message, sender, responder) => {
             //         }
             //     }
             // }
-        } else {
+            console.timeEnd('command')
+        }
+        if (state.mode === 'write') {
             const inputs = document.querySelectorAll(`[data-after='${state.writeTarget}']`)
             if (inputs.length > 0 && text) {
                 inputs[0].value = text
             }
+        }
+        if (state.mode === 'select' && command) {
+            selects(command)
         }
     }
 })
