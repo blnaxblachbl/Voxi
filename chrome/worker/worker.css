@@ -142,7 +142,7 @@ input:checked+.slider:before {
 
 .row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     width: 100%;
     margin-bottom: 10px;
@@ -151,11 +151,13 @@ input:checked+.slider:before {
 .key {
     font-size: 14px;
     text-align: left;
+    max-width: 35%;
 }
 
 .value {
     font-size: 14px;
     text-align: right;
+    max-width: 60%;
 }
 
 .voxi-helper-container {

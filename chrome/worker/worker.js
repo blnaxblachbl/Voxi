@@ -5,7 +5,9 @@ const en = {
     'Scroll to bottom of page': 'To scroll to the bottom of page say "bottom" of "scroll to bottom"',
     'Scroll to top of page': 'To scroll to the bottom of page say "top" or "scroll to top"',
     'Repeat last comand': 'To repeat last command say "more"',
-    'Click on something': 'To click on some element say "click" or "press" and number of element',
+    'Click on something': 'To click on some element sey the text of the element or say "click" or "press" and number of element',
+    'Select mode:': 'If Voxi find several variants of elements, you will see the selected element. If the item doesnt match what you want to click you can change it. To change select say "next" to switch to next item ot "previous" to select previous item. If item is match say "press" or "select" to click it. To cencel selection say "cancel". Select mode will cancel automaticly after 15 second.',
+    'Write mode': 'If clicked element is text input write mode will activeted. If mode is activated what ever you sat will writed to input. After you end speeking wite mode will turn off.',
     'Back to previous page': 'To navigate back to previous page say "back"',
     'Move to forward page': 'To navigate to next page say "forward"',
     "Select next tab": 'To open next browser tab say "next tab"',
@@ -13,6 +15,7 @@ const en = {
     "Close current tab": 'To close curent brouser tab say "close tab"',
     "Open new tab": 'To open new tab say "create tab" or "open new tab"',
     "Search somethiing in google": 'To search something say "search" or "find" and say search text',
+    "Open site": 'To open site say "open" and say site name. Example: "open instagram.com"'
 }
 
 const ru = {
@@ -22,7 +25,9 @@ const ru = {
     "Проскроллить на конец страницы": 'Чтобы пролистать в конец страницы, скажите "в конец" или "к концу"',
     "Проскроллить на начало страницы": 'Чтобы пролистать к началу страницы, скажите "в начало" или "к началу"',
     "Повторить предыдущее действие": 'Чтобы повториь проследнюю команду, скажите "еще"',
-    "Нажать на какой нибудь объект": 'Чтобы нажать на объект, скажите "нажми на..." и следом произнесите номер объекта',
+    "Нажать на какой нибудь объект": 'Чтобы нажать на объект, произнесите тект элемента или скажите "нажми на..." и следом произнесите номер объекта',
+    "Режим выбора": 'Если Voxi найдет несколько элементов с произнесенным текстом, то включиться режим выделения и вы увидите выделенный объект с зеленым фоном. Вы можете выделить к следующему элемнт, соответсвующий запросу. Чтобы выделить следующий элемент, скажите "далее" или "назад". Чтобы выделить предыдущий элемнт, скажите "назад". Чтобы нажать на выделенный элемент, скажите "выбрать" или "нажать"',
+    "Режим воода текста": 'Если нажатый вами элемент является полем ввода текста, то после нажатия автивируется режим ввода текста. Все что вы скажите будет записано в данное поле. После окончания произножшения вы снова сможете задавать комманды.',
     "Перейти на предыдущую страницу": 'Чтобы перейти на предыдущую страницу, скажите "назад"',
     "Перейти на следующую страницу": 'Чтобы перейти на следующую страницу, скажите "вперёд"',
     "Перейти на следующую вкладку": 'Чтобы открыть следующую вкладку браузера, скажите "следующая вкладка"',
@@ -30,6 +35,7 @@ const ru = {
     "Закрыть текущую вкладку": 'Чтобы закрыть текующую вкладку браузера, скажите "закрыть вкладку"',
     "Открыть новую вкладку": 'Чтобы открыть новыую вкладку браузера, скажите "новая вкладка" или "создать вкладку"',
     "Сделать поисковый запрос": 'Чтобы сделать поиск, скажите "поиск" или "найди" и следом произнесите то что хотите найти',
+    "Открыть сайт": 'Чтобы открыть сайт, скажите "открыть" и следом произнесите имя сайта. Пример: "отрктой instagram.com"'
 }
 
 
