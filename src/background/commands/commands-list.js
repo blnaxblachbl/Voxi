@@ -5,7 +5,7 @@ const enRegExp = {
     new: "((new|create) +tab)",
     search: "(search|find)",
     chnageLanguage: "(change +language( +to)?)",
-    more: '(^| )(more)($| )',
+    more: '^more$',
 }
 
 const ruRegExp = {
@@ -15,7 +15,7 @@ const ruRegExp = {
     new: "(нов(ая|ую) +вкладк(а|у))",
     search: "(поиск|най(д|т)и)",
     chnageLanguage: "(поменя(й|ть) +язык( +на)?)",
-    more: '(ещ(ё|е))',
+    more: '^(ещ(ё|е))$',
 }
 
 let commandsList = enRegExp

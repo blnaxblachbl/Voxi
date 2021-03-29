@@ -31,19 +31,6 @@ export const selects = (command) => {
     return false
 }
 
-const elemenst = [
-    'button',
-    'a',
-    'input[type="text"]',
-    'input[type="radio"]',
-    'input[type="button"]',
-    'input[type="file"]',
-    'input[type="email"]',
-    'input[type="password"]',
-    'input[type="submit"]',
-    'textarea'
-]
-
 export const searchElement = (command) => {
     chrome.storage.sync.get(['language'], ({ language }) => {
         const resArr = getElements(command, language)

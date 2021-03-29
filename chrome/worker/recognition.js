@@ -53,7 +53,7 @@ recognition.onresult = (event) => {
     for (let i = resultIndex; i < results.length; i++) {
         text += results[i][0].transcript.toLowerCase()
     }
-    command = isFinal ? text : ''
+    command = isFinal ? text.replace(/(^ )|( $)/g, '') : ''
     // text = isFinal ? '' : text
     if (state.mode === 'command') {
         chrome.runtime.sendMessage({ command })
