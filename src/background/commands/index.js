@@ -43,7 +43,7 @@ export const commands = async (command) => {
         if (command.match(new RegExp(commandsList.search, 'g'))) {
             chrome.tabs.create({
                 active: true,
-                url: `https://www.google.com/search?q=${command.replace(new RegExp(commandsList.search, 'g'), '')}`
+                url: `https://www.google.com/search?q=${command.replace(new RegExp(commandsList.searchText, 'g'), '')}`
             })
             chrome.storage.sync.set({ lascommand: command })
             return true
@@ -68,12 +68,10 @@ export const commands = async (command) => {
             const url = command.match(/[\w\d\-.]{1,64}\.\w{2,6}/gm)
             console.log(`http://${url[0]}`)
             if (url && url.length > 0) {
-                setTimeout(() => {
-                    chrome.tabs.create({
-                        active: true,
-                        url: `http://${url[0]}`
-                    })
-                }, 400)
+                chrome.tabs.create({
+                    active: true,
+                    url: `http://${url[0]}`
+                })
             }
             chrome.storage.sync.get(["lascommand"], ({ lascommand }) => {
                 commands(lascommand)
