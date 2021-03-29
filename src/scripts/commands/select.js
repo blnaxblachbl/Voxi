@@ -67,7 +67,7 @@ const getElements = (command, language) => {
     const ru = 'АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ'
     let upper = language === 'ru-RU' ? ru : en
     let lower = upper.toLowerCase()
-    let xpath = `html/body//*[contains(translate(normalize-space(text()), "${upper}", "${lower}"), '${text}') and not(@id="voxi-helper")]`;
+    let xpath = `html/body//*[contains(translate(normalize-space(text()), "${upper}", "${lower}"), '${text}') and not(@id="voxi-helper")]//ancestor-or-self::*[local-name()="a" or local-name()="button"]`;
     let matchingElement = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null)
     let resArr = []
     let res = matchingElement.iterateNext()

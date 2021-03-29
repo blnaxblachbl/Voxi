@@ -86,6 +86,10 @@ const sendToTab = async ({ text = '', command = '', isFinal = false }) => {
     chrome.tabs.sendMessage(current[0].id, { text, command })
 }
 
+recognition.onsoundend = (e) => {
+    console.log(e)
+}
+
 recognition.onerror = (e) => {
     console.log(e)
     if (state.started) {
