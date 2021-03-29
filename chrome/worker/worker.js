@@ -115,7 +115,8 @@ const setLanguage = (lang) => {
         for (let i = 0; i < languageSelector.childNodes.length; i++) {
             languageSelector.childNodes[i].innerText = languageSelector.childNodes[i].value === 'ru-RU' ? "Русский" : "Английский"
         }
-    } else {
+    }
+    if (lang === 'en-US') {
         title.innerText = 'Wellcome to "Voxi" settings page'
         active.innerText = "Autorun"
         language.innerText = "Languages"

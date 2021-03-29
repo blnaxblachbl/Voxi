@@ -48,6 +48,22 @@ export const commands = async (command) => {
             chrome.storage.sync.set({ lascommand: command })
             return true
         }
+        if (command.match(new RegExp(commandsList.chnageLanguage, 'g'))) {
+            if (command.match(/(russian|русский)/g)) {
+                chrome.storage.sync.set({ language: 'ru-RU' })
+            }
+            if (command.match(/(english|английский)/g)) {
+                chrome.storage.sync.set({ language: 'en-US' })
+            }
+            chrome.storage.sync.set({ lascommand: command })
+            return true
+        }
+        if (command.match(new RegExp(commandsList.more, 'gm'))) {
+            chrome.storage.sync.get(["lascommand"], ({ lascommand }) => {
+                commands(lascommand)
+            })
+            return true
+        }
     }
     return false
 }

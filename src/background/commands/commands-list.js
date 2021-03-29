@@ -1,31 +1,11 @@
-const en = {
-    tab: "tab", //(tab)
-    next: "next", //(next +tab)
-    prev: "prev", //(previous +tab)
-    close: "close", //((close|remove|delete) +tab)
-    new: "new", //((new|create) +tab)
-    create: "create", //((new|create) +tab)
-    search: "search", //(search|find)
-    find: "find" //(search|find)
-}
-
-const ru = {
-    tab: "вкладка", //(вкладка)
-    next: "следующ", //((следующ(ая|ую) +вкладк(а|у)))
-    prev: "предыдущ", //((предыдущ(ая|ую) +вкладк(а|у)))
-    close: "закрыть", //(закрыть +вкладк(а|у)))
-    new: "новая", //(нов(ая|ую) +вкладк(а|у)))
-    create: "открыть", //(нов(ая|ую) +вкладк(а|у)))
-    search: "поиск", //(поиск|най(д|т)и)
-    find: "найди" //(поиск|най(д|т)и)
-}
-
 const enRegExp = {
     next: "(next +tab)",
     prev: "(previous +tab)",
     close: "((close|remove|delete) +tab)",
     new: "((new|create) +tab)",
-    search: "(search|find)"
+    search: "(search|find)",
+    chnageLanguage: "(change +language( +to)?)",
+    more: '(^| )(more)($| )',
 }
 
 const ruRegExp = {
@@ -33,7 +13,9 @@ const ruRegExp = {
     prev: "(предыдущ(ая|ую) +вкладк(а|у))",
     close: "(закр(ыть|ой) +вкладк(а|у))",
     new: "(нов(ая|ую) +вкладк(а|у))",
-    search: "(поиск|най(д|т)и)"
+    search: "(поиск|най(д|т)и)",
+    chnageLanguage: "(поменя(й|ть) +язык( +на)?)",
+    more: '(ещ(ё|е))',
 }
 
 let commandsList = enRegExp
