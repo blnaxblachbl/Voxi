@@ -33,13 +33,11 @@ const elemenst = [
 const unmarkElements = () => {
     const arr = document.querySelectorAll(elemenst.join(', '))
     for (let i = 0, l = arr.length; i < l; i++) {
-        if (arr[i] instanceof HTMLInputElement || arr[i] instanceof HTMLTextAreaElement) {
+        arr[i].parentNode.classList.remove('voxi-parent')
+        const number = document.querySelector(`[number-after="${arr[i].getAttribute("data-after")}"]`)
+        if (number) {
+            number.parentNode.removeChild(number)
             arr[i].removeAttribute('data-after')
-            arr[i].classList.remove("voxi-input")
-            arr[i].parentNode.replaceWith(arr[i])
-        } else {
-            arr[i].removeAttribute("data-after")
-            arr[i].classList.remove('voxi-after')
         }
     }
 }
@@ -58,7 +56,7 @@ const markElements = async () => {
                 promices.push(
                     new Promise((resolve, reject) => {
                         arr[i].setAttribute("data-after", i + 1)
-                        const { top } = getOffset(arr[i])
+                        // const { top } = getOffset(arr[i])
                         const parent = arr[i].parentNode
                         const parentOffset = getOffset(parent)
                         const childOffset = getOffset(arr[i])
