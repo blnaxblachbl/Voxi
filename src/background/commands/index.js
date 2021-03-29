@@ -64,6 +64,22 @@ export const commands = async (command) => {
             })
             return true
         }
+        if (command.match(new RegExp(commandsList.site, 'gm'))) {
+            const url = command.match(/[\w\d\-.]{1,64}\.\w{2,6}/gm)
+            console.log(`http://${url[0]}`)
+            if (url && url.length > 0) {
+                setTimeout(() => {
+                    chrome.tabs.create({
+                        active: true,
+                        url: `http://${url[0]}`
+                    })
+                }, 400)
+            }
+            chrome.storage.sync.get(["lascommand"], ({ lascommand }) => {
+                commands(lascommand)
+            })
+            return true
+        }
     }
     return false
 }
